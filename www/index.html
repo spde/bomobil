@@ -34,10 +34,11 @@
 			fetchPages();
 		})
 		
-		$(document).on("pagebeforeshow", "#resultsPage", function( event ) {
+		$(document).on("pageshow", "#resultsPage", function(event) {
 			$.mobile.loading('show');
 			setTimeout(function(){
 				showResults();
+				$.mobile.loading('hide');
 				}, 20);
 			})
 
