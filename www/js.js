@@ -238,7 +238,7 @@ function scrollToOpenCollapsible(current_collapsible){
 		$(current_collapsible).parent().children().each(function(){
 			if (current_index != $(this).index() && $(this).collapsible("option", "collapsed") == false){
 				setTimeout(function(){scrollToOpenCollapsible(current_collapsible)}, 5);
-				false;
+				return false;
 				}
 			});
 	
