@@ -219,6 +219,7 @@ function validateContentType(url, type){
 	$.ajax({
 		async: false,
 		type: "HEAD",
+		cache: true,
 		url: url,
 		success: function(data, textStatus, jqXHR){
 			results = pattern.test(jqXHR.getResponseHeader('Content-Type'));
