@@ -463,6 +463,10 @@ function addResultObject(object, collapsiblesetdiv){
 											},
 										});
 								})
+							.error(function(){
+								alert("Kunde inte ladda bild, fel på bilden");
+								console.log('image error:' + this.src);
+								})
 							.attr("src", event.data.imgs[0]);
 						$("#imagePopup").append(img);
 						});
