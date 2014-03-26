@@ -495,7 +495,7 @@ function addResultObject(object, collapsiblesetdiv){
 					.addClass("ui-btn ui-shadow ui-corner-all ui-icon-grid ui-btn-icon-notext")
 					.html("PDFs");
 				pdf_btn.click({pdfs: object['pdfs']}, function(event){
-					window.open(event.data.pdfs[0], "_blank", "location=no, EnableViewPortScale=yes");
+					window.open(event.data.pdfs[0], "_blank", "location=no,EnableViewPortScale=yes");
 					});
 				}
 
