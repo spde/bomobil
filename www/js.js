@@ -465,7 +465,7 @@ function addResultObject(object, collapsiblesetdiv){
 								})
 							.error(function(){
 								$("#image_object").remove();
-								alert("Kunde inte ladda bild, fel på bilden");
+								alert("Kunde inte ladda bild, fel på bilden ("+this.src+")");
 								console.log('image error:' + this.src);
 								})
 							.attr("src", event.data.imgs[0]);
