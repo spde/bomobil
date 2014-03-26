@@ -74,7 +74,7 @@ function fetchPages(){
 					page_number = $(returnData).find("span[id=ucNavigationBarSimple_lblNoOfPages]").html().split(" ")[1].split("/");
 					page_number = parseInt(page_number[1]);
 					i = 2;
-					if (page_number > 1){
+					if (page_number > 50){
 						for (i = 2; i <= page_number; i++){
 							ongoing_requests[0][(i-2)] = true;
 							$.ajax({ 
