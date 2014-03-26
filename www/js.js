@@ -500,9 +500,9 @@ function addResultObject(object, collapsiblesetdiv){
 					.attr("data-rel", "popup")
 					.html("PDFs");
 				pdf_btn.click({pdfs: object['pdfs']}, function(event){
-					window.open(event.data.pdfs[0], "_self", "location=yes");
+					window.open(event.data.pdfs[0], "_blank", "location=yes");
 					//$("#pdf_div").load("http://docs.google.com/viewer?url="+event.data.pdfs[0]);
-					$("#pdfDiv").load("test.html");
+					//$("#pdfDiv").load("test.html");
 					});
 				}
 
