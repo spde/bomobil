@@ -62,7 +62,7 @@ function fetchPages(){
 	
 	//Initiate initial AJAX req (first page)
 		$.ajax({
-			url: "http://46.16.233.117/boplats/proxy.php?url=http%3A%2F%2Fwww.boplats.se%2FHSS%2FObject%2Fobject_list.aspx%3Fcmguid%3D4e6e781e-5257-403e-b09d-7efc8edb0ac8%26objectgroup%3D1",
+			url: "http://www.boplats.se/HSS/Object/object_list.aspx?cmguid=4e6e781e-5257-403e-b09d-7efc8edb0ac8&objectgroup=1",
 			dataType: 'html',
 			success: function(returnData) {
 				updateProgress(5);
@@ -78,7 +78,7 @@ function fetchPages(){
 						for (i = 2; i <= page_number; i++){
 							ongoing_requests[0][(i-2)] = true;
 							$.ajax({ 
-								url: "http://46.16.233.117/boplats/proxy.php?url=http%3A%2F%2Fwww.boplats.se%2FHSS%2FObject%2Fobject_list.aspx%3Fcmguid%3D4e6e781e-5257-403e-b09d-7efc8edb0ac8%26objectgroup%3D1&post=1&page="+i,
+								url: "http://www.boplats.se/HSS/Object/object_list.aspx?cmguid=4e6e781e-5257-403e-b09d-7efc8edb0ac8&objectgroup=1&page="+i,
 								dataType: 'html',
 								success: processPageData(i, page_number),
 								error: function(xhr, textStatus, error){
@@ -156,7 +156,7 @@ function extractObjectDeep(id, z){
 	
 	//Initiate AJAX call to fetch more object data
 		$.ajax({ 
-			url: "http://46.16.233.117/boplats/proxy.php?url=http%3A%2F%2Fwww.boplats.se%2FHSS%2FObject%2Fobject_details.aspx%3Fobjectguid%3D" + id,
+			url: "http://www.boplats.se/HSS/Object/object_details.aspx?objectguid=" + id,
 			dataType: 'html',
 			success: processObjectDeep(id, z),
 			error: function(xhr, textStatus, error){
@@ -464,6 +464,7 @@ function addResultObject(object, collapsiblesetdiv){
 										});
 								})
 							.error(function(){
+								$("#image_object").remove();
 								alert("Kunde inte ladda bild, fel på bilden");
 								console.log('image error:' + this.src);
 								})
