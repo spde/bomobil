@@ -33,9 +33,13 @@
 
 			fetchPages();
 		})
+
+		$(document).on("pagehide", "#pagetwo",function(){ // When leaving pagetwo
+			$.mobile.loading('show');
+			});
 		
 		$(document).on("pageshow", "#resultsPage", function(event) {
-			$.mobile.loading('show');
+			//$.mobile.loading('show');
 			setTimeout(function(){
 				showResults();
 				$.mobile.loading('hide');
