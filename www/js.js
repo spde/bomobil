@@ -201,7 +201,7 @@ function processObjectDeep(id, z){
 			objects[z]['description'] = $(returnData).find("span[id=lblDescription]").text().trim();
 			objects[z]['planning'] = $(returnData).find("span[id=lblPlanning]").text().trim();
 			objects[z]['properties'] = $(returnData).find("table[id=dlProperties] b").map(function(){return $(this).html().trim()}).get().join(", ");
-			objects[z]['images'] = $(returnData).find("table[id=dlMultimedia] img").map(function(){pattern = /ico_pdf\.gif$/; if (pattern.test($(this).attr("src")) == false){return "http://www.boplats.se"+$(this).attr("src").trim()}}).get();
+			objects[z]['images'] = $(returnData).find("table[id=dlMultimedia] img").map(function(){pattern = /ico_pdf\.gif$/; if (pattern.test($(this).attr("src")) == false && validateContentType("http://www.boplats.se"+$(this).attr("src").trim(), "image") == true){return "http://www.boplats.se"+$(this).attr("src").trim()}}).get();
 			objects[z]['pdfs'] = $(returnData).find("table[id=dlMultimedia] a").map(function(){return $(this).attr("href").trim().replace(/\.{2}\/\.{2}/, "http://www.boplats.se")}).get();
 			objects[z]['icons'] = $(returnData).find("tr[id=trIcons] a.apartment_detail_legend").map(function(){return {id: $(this).attr("id"), src: $("img", this).attr("src").trim().replace(/\.{2}\/\.{2}/, "http://www.boplats.se")};}).get();
 		
@@ -211,6 +211,23 @@ function processObjectDeep(id, z){
 		//Check if there are ongoing objects
 			checkOngoingObjectRequests();
 		}
+	}
+
+function validateContentType(url, type){
+	results = false;
+	pattern = new RegExp("/^"+type+"\//");
+	$.ajax({
+		async: false,
+		type: "HEAD",
+		url: url,
+		success: function(data, textStatus, jqXHR){
+			results = pattern.test(jqXHR.getResponseHeader('Content-Type'));
+			},
+		error: function(jqXHR, textStatus, errorThrown){
+			results = false;
+			}
+		});
+	return results;
 	}
 
 function scrollToOpenCollapsible(current_collapsible){
