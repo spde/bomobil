@@ -15,6 +15,10 @@
 	<script type="text/javascript" src="js.js?=2"></script>
 	<script type="text/javascript" src="jquerymobile/jquery.mobile-1.4.2.min.js"></script>
 	<script>
+		window.onerror = function(error) {
+			alert(error);
+			};
+
 		location.hash = "#splash";
 		
 		$(document).on("pagecreate", "#splash", function(event){
