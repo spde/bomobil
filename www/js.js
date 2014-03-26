@@ -492,17 +492,10 @@ function addResultObject(object, collapsiblesetdiv){
 			if (object['pdfs'].length > 0){
 				pdf_btn = $("<a>")
 					.appendTo(buttons_div)
-					//.attr("href", object['pdfs'][0])
-					//.attr("data-ajax", false)
-					//.attr("href", "#pdfPopup")
 					.addClass("ui-btn ui-shadow ui-corner-all ui-icon-grid ui-btn-icon-notext")
-					.attr("data-transition", "fade")
-					.attr("data-rel", "popup")
 					.html("PDFs");
 				pdf_btn.click({pdfs: object['pdfs']}, function(event){
-					window.open(event.data.pdfs[0], "_blank", "location=no", "EnableViewPortScale=yes");
-					//$("#pdf_div").load("http://docs.google.com/viewer?url="+event.data.pdfs[0]);
-					//$("#pdfDiv").load("test.html");
+					window.open(event.data.pdfs[0], "_blank", "location=no, EnableViewPortScale=yes");
 					});
 				}
 
