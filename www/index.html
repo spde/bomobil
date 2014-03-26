@@ -36,6 +36,9 @@
 		
 		$(document).on("pagebeforeshow", "#resultsPage", function( event ) {
 			$.mobile.loading('show');
+			setTimeout(function(){
+				showResults();
+				}, 20);
 			})
 
 		$(document).ready(function(){
@@ -297,7 +300,7 @@
 
 		</div>
 
-		<input type=button value=Search onclick="showResults(); location.hash = '#resultsPage'">
+		<a class="ui-btn" href="#resultsPage">Search</a>
 	</div>
 	<div data-role="footer" data-position="fixed" data-id="pagefooter">
 		<a href="#searchPage" data-icon="home" data-iconpos="notext" data-direction="reverse">Home</a>
