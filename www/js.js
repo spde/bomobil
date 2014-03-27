@@ -190,6 +190,8 @@ function buildObjectList(html_data){
 function clearLocalStorageObjects(active_objects){
 	
 	//Check if database is latest version (if not, clear it)
+		alert(localStorage.test+" test marker");
+		localStorage.test = "testing";
 		alert(localStorage.getItem("database_ver"));
 		if (localStorage.getItem("database_ver") != database_ver){
 			localStorage.clear();
