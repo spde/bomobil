@@ -35,14 +35,21 @@ function setLawnchair(key, object){
 
 function getLawnchair(key){
 	temp = null;
-	store.get(key, function(result){
-		temp = result.value;
-		});
+	store.exists(key, function(exists){
+		if (exists == true){
+			store.get(key, function(result){
+				temp = result.value;
+				});
+			}
+		}
 	return temp;
 	}
 
 function removeLawnchair(key){
-	store.remove(key, function(){});
+	store.exists(key, function(exists){
+		if (exists == true){
+			store.remove(key, function(){});
+		}
 	}
 
 function lengthLawnchair(){
