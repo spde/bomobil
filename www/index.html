@@ -46,6 +46,10 @@
 				}, 20);
 			})*/
 
+		$(document).on("pageshow", "#resultsPage", function(){
+			showResults();
+			});
+
 		$(document).on("pagebeforechange", function(e, data){
 			if (typeof data.toPage == "object"){ 
 				if (typeof $.mobile.activePage == "object"){

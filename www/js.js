@@ -283,50 +283,50 @@ function filterObjects(object_array){
 	
 	var new_object_array = Array();
 	
-	for (i = 0; i < object_array.length; i++){
+	for (key in object_array){
 		(function(){
 			
 			//Filters
 
 				//Area
-					if ($.inArray(object_array[i]['area'], $("input[id^='area[']:checked").map(function(){return $(this).val()}).get()) == -1){
+					if ($.inArray(object_array[key]['area'], $("input[id^='area[']:checked").map(function(){return $(this).val()}).get()) == -1){
 						return;
 						}
 
 				//Rooms
-					if (parseInt(object_array[i]['rooms']) < $("#min_rooms").val() || parseInt(object_array[i]['rooms']) > $("#max_rooms").val()){
+					if (parseInt(object_array[key]['rooms']) < $("#min_rooms").val() || parseInt(object_array[key]['rooms']) > $("#max_rooms").val()){
 						return;
 						}
 				
 				//Cost
-					if (parseInt(object_array[i]['cost']) < $("#min_cost").val() || parseInt(object_array[i]['cost']) > $("#max_cost").val()){
+					if (parseInt(object_array[key]['cost']) < $("#min_cost").val() || parseInt(object_array[key]['cost']) > $("#max_cost").val()){
 						return;
 						}
 
 				//Size
-					if (parseInt(object_array[i]['size'][0]) < $("#min_size").val() || parseInt(object_array[i]['size'][0]) > $("#max_size").val()){
+					if (parseInt(object_array[key]['size'][0]) < $("#min_size").val() || parseInt(object_array[key]['size'][0]) > $("#max_size").val()){
 						return;
 						}
 
 				//Floor
-					if (parseInt(object_array[i]['floor']) < $("#min_floor").val() || parseInt(object_array[i]['floor']) > $("#max_floor").val()){
+					if (parseInt(object_array[key]['floor']) < $("#min_floor").val() || parseInt(object_array[key]['floor']) > $("#max_floor").val()){
 						return;
 						}
 
 				//Available
-					if ($("#available").val() != null && $.datepicker.parseDate('yy-mm-dd', $("#available").val()) > $.datepicker.parseDate('yy-mm-dd', object_array[i]['move_in_date'])){
+					if ($("#available").val() != null && $.datepicker.parseDate('yy-mm-dd', $("#available").val()) > $.datepicker.parseDate('yy-mm-dd', object_array[key]['move_in_date'])){
 						return;
 						}
 
 				//Icons
-					for (z = 0; z < object_array[i]['icons'].length; z++){
-						if ($.inArray(object_array[i]['icons'][z].id, $("input[id^='icon[']:checked").map(function(){return $(this).val()}).get()) == -1){
+					for (z = 0; z < object_array[key]['icons'].length; z++){
+						if ($.inArray(object_array[key]['icons'][z].id, $("input[id^='icon[']:checked").map(function(){return $(this).val()}).get()) == -1){
 							return;
 							}
 						}
 
 			//Add to new array
-				new_object_array.push(object_array[i]);
+				new_object_array.push(object_array[key]);
 			})();
 		}
 	
@@ -371,9 +371,6 @@ function customSort(a, b, level){
 
 function showResults(){
 	
-	//Change page
-		location.hash = "#resultsPage";
-	
 	//Create collapsibleset div
 		collapsiblesetdiv = $("<div>");
 		collapsiblesetdiv.attr("data-role", "collapsibleset");
@@ -387,8 +384,8 @@ function showResults(){
 		temp_objects = sortObjects(temp_objects);
 
 	//Add objects to collabsibleset div
-		for (i = 0; i < temp_objects.length; i++){
-			addResultObject(temp_objects[i], collapsiblesetdiv);
+		for (key in temp_objects){
+			addResultObject(temp_objects[key], collapsiblesetdiv);
 			}
 
 	//Append to results page
