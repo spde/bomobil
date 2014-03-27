@@ -113,6 +113,7 @@ function fetchPages(){
 	}
 
 function processPages(){
+	
 	//Find all objects
 		for (var k = 0; k < pages_data.length; k++){
 			buildObjectList(pages_data[k]);
