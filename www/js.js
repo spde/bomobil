@@ -693,14 +693,14 @@ function saveUserDetails(){
 	if ($("#username").val() != "" && $("#password").val() != ""){
 		setLawnchair("username", encrypt($("#username").val()));
 		setLawnchair("password", encrypt($("#password").val()));
-		testUserDetails();
+		login(function (param1){alert(param1);});
 		}
 	else{
 		alert("Fyll i användaruppgifter");
 		}
 	}
 
-function testUserDetails(){
+function login(callback){
 
 	//Build POST data
 		var data = {
@@ -720,32 +720,30 @@ function testUserDetails(){
 			data: data,
 			url: "https://www.boplats.se/user/login_hs.aspx?ReturnUrl=/HSS/Default.aspx",
 			dataType: 'html',
-			success: processLoginForm(),
+			success: callback(processLoginForm()),
 			error: function(xhr, textStatus, error){
 				alert(xhr.status+", "+xhr.statusText+", "+textStatus+", "+error)
 				},
 			});
 	}
 
+function logout(){
+	
+	}
+
 function processLoginForm(){
 	return function (returnData){
-		alert(returnData);
-		alert($(returnData).find("input[id=ucTop_btnLogin]").val());
-		alert($(returnData).find("input[id=ucTop_btnLogin]").attr("value"));
-		
-		//Initiate AJAX call to fetch more object data
-			setTimeout(function(){$.ajax({
-				type: "GET",
-				cache: false,
-				async: false,
-				url: "http://www.boplats.se/HSS/Object/object_list.aspx?cmguid=4e6e781e-5257-403e-b09d-7efc8edb0ac8&objectgroup=1",
-				dataType: 'html',
-				success: function (returnData){
-					alert(returnData);
-					},
-				error: function(xhr, textStatus, error){
-					alert(xhr.status+", "+xhr.statusText+", "+textStatus+", "+error)
-					},
-				});}, 5000);
+		if (returnData != null){
+			if ($(returnData).find("input[id=ucTop_btnLogin]").length > 0){
+				if ($(returnData).find("input[id=ucTop_btnLogin]").val() == "Logga ut"){
+					alert('true in processLoginForm');
+					return true;
+					}
+				}
+			}
+		else{
+			alert('false in processLoginForm');
+			return false;
+			}
 		}
 	}
