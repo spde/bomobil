@@ -161,16 +161,16 @@ function buildObjectList(html_data){
 		$(html_data).find("table[id=dgList] tr.tbl_cell_list_even, table[id=dgList] tr.tbl_cell_list_odd").each(function(){
 			
 			//Find object columns
-				var columns = $(this).find("td");
+				var columns = $("td", this);
 
 			//Find URL
-				url = columns.first().find("a").attr('href');
+				url = $("a", columns.eq(0)).attr('href');
 
 			//Find object ID
 				id = url.split("?")[1].split("=")[1];
 
 			//Find interested
-				interested = columns.get(5).find('span').text().trim();
+				interested = $("span", columns.eq(5)).text().trim();
 			
 			//Add object ID to object list
 				object_list[id] = {id: id, url: url, interested: interested};
