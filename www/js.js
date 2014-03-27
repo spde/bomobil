@@ -676,12 +676,14 @@ function checkUUID(){
 	}
 
 function encrypt(string){
+	return string;
 	var key = hexToByteArray(device.uuid);
 	var mode = 'ECB'; // ECB or CBC
 	return byteArrayToHex(rijndaelEncrypt(string,key, mode));
 	}
 
 function decrypt(encrypted_string){
+	return encrypted_string;
 	var key = hexToByteArray(device.uuid);
 	var mode = 'ECB'; // ECB or CBC
 	return byteArrayToString(rijndaelDecrypt(hexToByteArray(encrypted_string), key, mode))
