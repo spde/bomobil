@@ -576,7 +576,7 @@ function updateProgress(value){
 					count++;
 					}
 				}
-			value = (count / ongoing_requests[1].length) * 80 + 20;
+			value = (count / Object.keys(ongoing_requests[1]).length) * 80 + 20;
 			}
 
 	//Update progress bar
