@@ -25,6 +25,14 @@
 
 		var deviceUUID = null;
 
+		document.addEventListener("deviceready", onDeviceReady, false);
+
+		function onDeviceReady() {
+			alert(device.uuid);
+			// Now safe to use the PhoneGap API
+		}
+
+
 		$(document).on("deviceready", function(event){
 			alert(device.uuid);
 			deviceUUID = device.uuid;
