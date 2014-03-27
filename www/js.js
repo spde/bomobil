@@ -181,7 +181,6 @@ function buildObjectList(html_data){
 
 function clearLocalStorageObjects(active_objects){
 	for (z = 0; z < localStorage.length; z++){
-		alert(localStorage.key(z));
 		exists = false;
 		for (key in active_objects){
 			if (localStorage.key(z) == "object_"+key){
