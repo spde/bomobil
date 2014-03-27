@@ -138,6 +138,7 @@ function processPages(){
 				if (localStorage.getItem("object_"+id) != null){
 					
 					//Fetch data from localStorage and put into objects array
+						alert(localStorage.getItem("object_"+id));
 						objects[id] = JSON.parse(localStorage.getItem("object_"+id));
 
 					}
