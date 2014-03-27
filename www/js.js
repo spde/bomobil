@@ -701,6 +701,10 @@ function saveUserDetails(){
 	}
 
 function login(callback){
+	
+	if(typeof callback == "function"){
+		callback("testparam1");
+		}
 
 	//Build POST data
 		var data = {
@@ -720,7 +724,7 @@ function login(callback){
 			data: data,
 			url: "https://www.boplats.se/user/login_hs.aspx?ReturnUrl=/HSS/Default.aspx",
 			dataType: 'html',
-			success: callback(processLoginForm()),
+			success: function(){},//processLoginForm(),
 			error: function(xhr, textStatus, error){
 				alert(xhr.status+", "+xhr.statusText+", "+textStatus+", "+error)
 				},
