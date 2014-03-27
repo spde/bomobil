@@ -23,6 +23,12 @@
 			alert(error);
 			};
 
+		var deviceUUID = null;
+
+		$(document).on("deviceready", function(event){
+			deviceUUID = device.uuid;
+			});
+
 		checkUUID();
 
 		location.hash = "#splash";
