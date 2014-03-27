@@ -554,8 +554,8 @@ function addResultObject(object, collapsiblesetdiv){
 
 function checkOngoingObjectRequests(){
 	//Return true if there are still ongoing requests
-		for (x = 0; x < ongoing_requests[1].length; x++){
-			if (ongoing_requests[1][x] == true){
+		for (key in ongoing_requests[1]){
+			if (ongoing_requests[1][key] == true){
 				updateProgress();
 				return true;
 				}
@@ -571,8 +571,8 @@ function updateProgress(value){
 	//If no value is defined, calculate approximate progress based on ongoing requests compared to total requests
 		if (typeof(value) === "undefined"){
 			var count = 0;
-			for (y = 0; y < ongoing_requests[1].length; y++){
-				if (ongoing_requests[1][y] == false){
+			for (key in ongoing_requests[1]){
+				if (ongoing_requests[1][key] == false){
 					count++;
 					}
 				}
