@@ -733,5 +733,19 @@ function processLoginForm(){
 		alert($(returnData).find("input[id=ucTop_btnLogin]").val());
 		alert($(returnData).find("input[id=ucTop_btnLogin]").attr("value"));
 		
+		//Initiate AJAX call to fetch more object data
+			setTimeout(function(){$.ajax({
+				type: "GET",
+				cache: false,
+				async: false,
+				url: "http://www.boplats.se/HSS/Object/object_list.aspx?cmguid=4e6e781e-5257-403e-b09d-7efc8edb0ac8&objectgroup=1",
+				dataType: 'html',
+				success: function (returnData){
+					alert(returnData);
+					},
+				error: function(xhr, textStatus, error){
+					alert(xhr.status+", "+xhr.statusText+", "+textStatus+", "+error)
+					},
+				});}, 5000);
 		}
 	}
