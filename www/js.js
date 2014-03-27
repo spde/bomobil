@@ -655,3 +655,34 @@ function updateProgress(value){
 		$("#progressbar").progressbar("value", Math.round(value));
 
 	}
+
+function checkUUID(){
+
+	//If no UUID exists in database, set one
+		if (getLawnchair("UUID") == null){
+			setLawnchair("UUID", device.uuid);
+			}
+
+	//Check if database UUID does not match current UUID
+		if (getLawnchair("UUID") != device.uuid){
+			//Set new UUID
+				setLawnchair("UUID", device.uuid);
+
+			//Clear login details in database
+				removeLawnchair("username");
+				removeLawnchair("password");
+
+			}
+	}
+
+function encrypt(string){
+	var key = hexToByteArray(device.uuid);
+	var mode = 'ECB'; // ECB or CBC
+	return byteArrayToHex(rijndaelEncrypt(string,key, mode));
+	}
+
+function decrypt(encrypted_string){
+	var key = hexToByteArray(device.uuid);
+	var mode = 'ECB'; // ECB or CBC
+	return byteArrayToString(rijndaelDecrypt(hexToByteArray(encrypted_string), key, mode))
+	}
