@@ -718,7 +718,7 @@ function testUserDetails(){
 			cache: false,
 			async: false,
 			data: data,
-			url: "https://www.boplats.se/user/login_hs.aspx",
+			url: "https://www.boplats.se/user/login_hs.aspx?ReturnUrl=/HSS/Default.aspx",
 			dataType: 'html',
 			success: processLoginForm(),
 			error: function(xhr, textStatus, error){
