@@ -50,11 +50,11 @@
 			if (typeof data.toPage == "object"){ 
 				if (typeof $.mobile.activePage == "object"){
 					if($.mobile.activePage.attr("id") != data.toPage.attr("id")){
-						showLoadingMessage(true);
+						$.mobile.loading('show');
 						}
 					}
 				else{
-					showLoadingMessage(true);
+					$.mobile.loading('show');
 					}
 				}
 			});
