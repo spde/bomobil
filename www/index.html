@@ -28,9 +28,8 @@
 		$(document).on("deviceready", function(event){
 			alert(device.uuid);
 			deviceUUID = device.uuid;
+			checkUUID();
 			});
-
-		checkUUID();
 
 		location.hash = "#splash";
 		
