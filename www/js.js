@@ -730,7 +730,7 @@ function testUserDetails(){
 function processLoginForm(){
 	return function (returnData){
 		alert(returnData);
-		alert($(returnData).find("input[id=ucTop_btnLogin]")).val();
+		alert($(returnData).find("input[id=ucTop_btnLogin]").val());
 		alert($(returnData).find("input[id=ucTop_btnLogin]").attr("value"));
 		
 		}
