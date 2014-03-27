@@ -41,7 +41,7 @@ function getLawnchair(key){
 				temp = result.value;
 				});
 			}
-		}
+		});
 	return temp;
 	}
 
@@ -49,7 +49,8 @@ function removeLawnchair(key){
 	store.exists(key, function(exists){
 		if (exists == true){
 			store.remove(key, function(){});
-		}
+			}
+		});
 	}
 
 function lengthLawnchair(){
