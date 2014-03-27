@@ -23,9 +23,11 @@
 			alert(error);
 			};
 
+		device = {uuid: 123};
+
 		checkUUID();
 
-		location.hash = "#splash";
+		location.hash = "#userPage";
 		
 		$(document).on("pagecreate", "#splash", function(event){
 			$( "#progressbar" ).progressbar({
