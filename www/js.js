@@ -722,7 +722,7 @@ function testUserDetails(){
 			dataType: 'html',
 			success: processLoginForm(),
 			error: function(xhr, textStatus, error){
-				alert(xhr.statusText+", "+textStatus+", "+error)
+				alert(xhr.status+", "+xhr.statusText+", "+textStatus+", "+error)
 				},
 			});
 	}
