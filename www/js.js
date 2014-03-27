@@ -239,6 +239,9 @@ function processObjectDeep(id){
 			objects[id]['pdfs'] = $(returnData).find("table[id=dlMultimedia] a").map(function(){return $(this).attr("href").trim().replace(/\.{2}\/\.{2}/, "http://www.boplats.se")}).get();
 			objects[id]['icons'] = $(returnData).find("tr[id=trIcons] a.apartment_detail_legend").map(function(){return {id: $(this).attr("id"), src: $("img", this).attr("src").trim().replace(/\.{2}\/\.{2}/, "http://www.boplats.se")};}).get();
 		
+		//Cache object to local storage
+			localStorage.setItem("object_"+id, JSON.stringify(objects[id]));
+
 		//Set object tracking to complete
 			ongoing_requests[1][id] = false;
 
