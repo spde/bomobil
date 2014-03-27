@@ -3,6 +3,9 @@
 	//Variable containing an array of objects and their data
 		var objects = new Array();
 
+	//Variable containing an array of object IDs
+		var object_list = new Array();
+
 	//Variable containing two arrays of AJAX request trackers
 		var ongoing_requests = new Array(Array(), Array());
 
@@ -88,7 +91,7 @@ function fetchPages(){
 								dataType: 'html',
 								success: processPageData(i, page_number),
 								error: function(xhr, textStatus, error){
-									alert(xhr.statusText+", "+textStatus+", "+error)
+									alert(xhr.statusText+", "+textStatus+", "+error);
 									},
 								});
 							
@@ -110,62 +113,87 @@ function fetchPages(){
 	}
 
 function processPages(){
-	//Iterate through objects
+	//Find all objects
 		for (var k = 0; k < pages_data.length; k++){
-			extractObjects(pages_data[k]);
+			buildObjectList(pages_data[k]);
+			}
+
+	//Clear old items in localStorage
+		clearLocalStorageObjects(object_list);
+	
+	//Process objects
+		for (var k = 0; k < object_list.length; k++){
+			
+			//Object ID
+				id = object_list.key(k);
+
+			//Insert empty placeholder object
+				objects[id] = new Array();
+
+			//Check if object already exists in localStorage
+				if (localStorage.getItem("object_"+id) != null){
+					
+					//Fetch data from localStorage and put into objects array
+						objects[id] = JSON.parse(localStorage.getItem("object_"+id));
+					}
+
+			//Fetch data via AJAX
+				else{
+					
+					//Track object AJAX req
+						ongoing_requests[1][id] = true;
+
+					//Fetch additional page data
+						extractObjectDeep(id);
+				
+					}
+
+			//Copy initial variables to object
+				objects[id]['id'] = id;
+				objects[id]['url'] = object_list[k]['url'];
+				objects[id]['interested'] = object_list[k]['interested'];
 			}
 	}
 
-function extractObjects(html_data){
-
-	//Set object counter
-		z = objects.length > 0 ? objects.length : 0;
+function buildObjectList(html_data){
 	
 	//Find objects in page
 		$(html_data).find("table[id=dgList] tr.tbl_cell_list_even, table[id=dgList] tr.tbl_cell_list_odd").each(function(){
-		
-			//Track object req
-				ongoing_requests[1][z] = true;
 			
-			//Insert object
-				objects[z] = new Array();
-
 			//Find object columns
 				var columns = $(this).find("td");
 
-			//Put data in object array
-				for (i = 0; i < columns.length; i++){
-					if (i == 0){
-						url = $(columns[i]).find("a").attr('href');
-						objects[z]['url'] = url;
-						objects[z]['id'] = url.split("?")[1].split("=")[1];
-						}
-					if (i == 1){
-						objects[z]['address'] = $(columns[i]).text().trim();
-						}
-					if (i == 2){
-						objects[z]['area2'] = $(columns[i]).text().trim();
-						}
-					if (i == 3){
-						objects[z]['rooms'] = $(columns[i]).text().trim();
-						}
-					if (i == 4){
-						objects[z]['cost'] = $(columns[i]).text().trim();
-						}
-					if (i == 5){
-						objects[z]['interested'] = $(columns[i]).find('span').text().trim();
-						}
-					}
+			//Find URL
+				url = columns.first().find("a").attr('href');
 
-			//Fetch additional page data
-				extractObjectDeep(objects[z]['id'], z);
+			//Find object ID
+				id = url.split("?")[1].split("=")[1];
 
-			z++;
+			//Find interested
+				interested = columns.get(5).find('span').text().trim();
+			
+			//Add object ID to object list
+				object_list[id] = {id: id, url: url, interested: interested};
+			
 			});
-
 	}
 
-function extractObjectDeep(id, z){
+function clearLocalStorageObjects(active_objects){
+	for (z = 0; z < localStorage.length; z++){
+		exists = false;
+		for (y = 0; y < active_objects.length; y++){
+			if (localStorage.key(z) == "object_"+active_objects.key(y)){
+				exists = true;
+				break;
+				}
+			}
+		if (exists == false){
+			localStorage.removeItem(localStorage.key(z))
+			}
+		}
+	}
+
+function extractObjectDeep(id){
 	
 	//Initiate AJAX call to fetch more object data
 		$.ajax({
@@ -173,40 +201,44 @@ function extractObjectDeep(id, z){
 			cache: true,
 			url: "http://www.boplats.se/HSS/Object/object_details.aspx?objectguid=" + id,
 			dataType: 'html',
-			success: processObjectDeep(id, z),
+			success: processObjectDeep(id),
 			error: function(xhr, textStatus, error){
 				alert(xhr.statusText+", "+textStatus+", "+error)
 				},
 			});
 	}
 
-function processObjectDeep(id, z){
+function processObjectDeep(id){
 	return function (returnData){
 		
 		//If response is null, restart ajax request
 			regexp = new RegExp("HTTP request failed");
 			if (regexp.test(returnData) == true || returnData == null){
-				extractObjectDeep(id, z);
+				extractObjectDeep(id);
 				return;
 				}
 
 		//Put data in object array
-			objects[z]['size'] = $(returnData).find("span[id=lblSize]").text().trim().split(" ");
-			objects[z]['floor'] = $(returnData).find("span[id=lblFloor]").text().trim();
-			objects[z]['move_in_date'] = $(returnData).find("span[id=lblMoveIn]").text().trim();
-			objects[z]['available_date'] = $(returnData).find("span[id=lblDateAvailable]").text().trim();
-			objects[z]['last_reg_date'] = $(returnData).find("span[id=lblLastRegDate]").text().trim();
-			objects[z]['boplats_id'] = $(returnData).find("span[id=lblObjectId]").text().trim();
-			objects[z]['area'] = $(returnData).find("span[id=lblArea]").text().trim();
-			objects[z]['description'] = $(returnData).find("span[id=lblDescription]").text().trim();
-			objects[z]['planning'] = $(returnData).find("span[id=lblPlanning]").text().trim();
-			objects[z]['properties'] = $(returnData).find("table[id=dlProperties] b").map(function(){return $(this).html().trim()}).get().join(", ");
-			objects[z]['images'] = $(returnData).find("table[id=dlMultimedia] img").map(function(){pattern = /ico_pdf\.gif$/; if (pattern.test($(this).attr("src")) == false && validateContentType("http://www.boplats.se"+$(this).attr("src").trim(), "image") == true){return "http://www.boplats.se"+$(this).attr("src").trim()}}).get();
-			objects[z]['pdfs'] = $(returnData).find("table[id=dlMultimedia] a").map(function(){return $(this).attr("href").trim().replace(/\.{2}\/\.{2}/, "http://www.boplats.se")}).get();
-			objects[z]['icons'] = $(returnData).find("tr[id=trIcons] a.apartment_detail_legend").map(function(){return {id: $(this).attr("id"), src: $("img", this).attr("src").trim().replace(/\.{2}\/\.{2}/, "http://www.boplats.se")};}).get();
+			objects[id]['size'] = $(returnData).find("span[id=lblSize]").text().trim().split(" ");
+			objects[id]['floor'] = $(returnData).find("span[id=lblFloor], span[id=lblFloorTotal]").map(function(){return $(this).text().trim()}).get().join("");
+			objects[id]['rooms'] = $(returnData).find("span[id=lblRooms]").text().trim();
+			objects[id]['cost'] = $(returnData).find("span[id=lblCost]").text().trim();
+			objects[id]['address'] = $(returnData).find("span[id=lblAddress1]").text().trim();
+			objects[id]['move_in_date'] = $(returnData).find("span[id=lblMoveIn]").text().trim();
+			objects[id]['available_date'] = $(returnData).find("span[id=lblDateAvailable]").text().trim();
+			objects[id]['last_reg_date'] = $(returnData).find("span[id=lblLastRegDate]").text().trim();
+			objects[id]['boplats_id'] = $(returnData).find("span[id=lblObjectId]").text().trim();
+			objects[id]['area'] = $(returnData).find("span[id=lblArea]").text().trim();
+			objects[id]['area2'] = $(returnData).find("a[id=lblArea2]").text().trim();
+			objects[id]['description'] = $(returnData).find("span[id=lblDescription]").text().trim();
+			objects[id]['planning'] = $(returnData).find("span[id=lblPlanning]").text().trim();
+			objects[id]['properties'] = $(returnData).find("table[id=dlProperties] b").map(function(){return $(this).text().trim()}).get().join(", ");
+			objects[id]['images'] = $(returnData).find("table[id=dlMultimedia] img").map(function(){pattern = /ico_pdf\.gif$/; if (pattern.test($(this).attr("src")) == false && validateContentType("http://www.boplats.se"+$(this).attr("src").trim(), "image") == true){return "http://www.boplats.se"+$(this).attr("src").trim()}}).get();
+			objects[id]['pdfs'] = $(returnData).find("table[id=dlMultimedia] a").map(function(){return $(this).attr("href").trim().replace(/\.{2}\/\.{2}/, "http://www.boplats.se")}).get();
+			objects[id]['icons'] = $(returnData).find("tr[id=trIcons] a.apartment_detail_legend").map(function(){return {id: $(this).attr("id"), src: $("img", this).attr("src").trim().replace(/\.{2}\/\.{2}/, "http://www.boplats.se")};}).get();
 		
 		//Set object tracking to complete
-			ongoing_requests[1][z] = false;
+			ongoing_requests[1][id] = false;
 
 		//Check if there are ongoing objects
 			checkOngoingObjectRequests();
