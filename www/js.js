@@ -730,8 +730,8 @@ function testUserDetails(){
 function processLoginForm(){
 	return function (returnData){
 		alert(returnData);
-		alert($(returndata).find("input[id='ucTop_btnLogin']")).val();
-		alert($(returndata).find("input[id='ucTop_btnLogin']").attr("value"));
+		alert($(returnData).find("input[id=ucTop_btnLogin]")).val();
+		alert($(returnData).find("input[id=ucTop_btnLogin]").attr("value"));
 		
 		}
 	}
