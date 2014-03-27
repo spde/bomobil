@@ -59,7 +59,7 @@ function fetchPages(){
 	//Initiate initial AJAX req (first page)
 		$.ajax({
 			type: "GET",
-			url: "http://www.boplats.se/HSS/Object/object_list.aspx?cmguid=4e6e781e-5257-403e-b09d-7efc8edb0ac8&objectgroup=1",
+			url: "list.html",
 			dataType: 'html',
 			cache: true,
 
@@ -87,7 +87,7 @@ function fetchPages(){
 								type: "POST",
 								data: data,
 								cache: true,
-								url: "http://www.boplats.se/HSS/Object/object_list.aspx?cmguid=4e6e781e-5257-403e-b09d-7efc8edb0ac8&objectgroup=1",
+								url: "list.html",
 								dataType: 'html',
 								success: processPageData(i, page_number),
 								error: function(xhr, textStatus, error){
@@ -200,7 +200,7 @@ function extractObjectDeep(id){
 		$.ajax({
 			type: "GET",
 			cache: true,
-			url: "http://www.boplats.se/HSS/Object/object_details.aspx?objectguid=" + id,
+			url: "object.html?objectguid=" + id,
 			dataType: 'html',
 			success: processObjectDeep(id),
 			error: function(xhr, textStatus, error){
