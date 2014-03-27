@@ -247,12 +247,10 @@ function buildObjectList(html_data){
 function clearLocalStorageObjects(active_objects){
 	
 	//Check if database is latest version (if not, clear it)
-		alert("version before: "+getLawnchair("database_ver"));
 		if (getLawnchair("database_ver") != database_ver){
 			clearLawnchair();
 			setLawnchair("database_ver", database_ver);
 			}
-		alert("version after: "+getLawnchair("database_ver"));
 
 	for (z = 0; z < keysLawnchair(); z++){
 		exists = false;
