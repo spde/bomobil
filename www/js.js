@@ -15,6 +15,9 @@
 	//Variable containing sorting order
 		var sorting_order = new Array();
 
+	//Database version
+		database_ver = 1.1;
+
 function processPageData(x, page_number){
 	return function (returnData){
 		//Add page html to array
@@ -184,6 +187,13 @@ function buildObjectList(html_data){
 	}
 
 function clearLocalStorageObjects(active_objects){
+	
+	//Check if database is latest version (if not, clear it)
+		if (localStorage.getItem("database_ver") != database_ver){
+			localStorage.clear();
+			localStorage.setItem("database_ver", database_ver);
+			}
+
 	for (z = 0; z < localStorage.length; z++){
 		exists = false;
 		for (key in active_objects){
