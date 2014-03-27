@@ -1,7 +1,7 @@
 //Define global variables
 
 	//Variable containing an array of objects and their data
-		var objects = new Array();
+		var objects = {};
 
 	//Variable containing an array of object IDs
 		var object_list = new Array();
@@ -129,7 +129,7 @@ function processPages(){
 				id = key;
 
 			//Insert empty placeholder object
-				objects[id] = new Array();
+				objects[id] = {};
 
 			//Check if object already exists in localStorage
 				if (localStorage.getItem("object_"+id) != null){
