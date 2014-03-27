@@ -724,7 +724,7 @@ function login(callback){
 			data: data,
 			url: "https://www.boplats.se/user/login_hs.aspx?ReturnUrl=/HSS/Default.aspx",
 			dataType: 'html',
-			success: function(){},//processLoginForm(),
+			success: //processLoginForm(),
 			error: function(xhr, textStatus, error){
 				alert(xhr.status+", "+xhr.statusText+", "+textStatus+", "+error)
 				},
