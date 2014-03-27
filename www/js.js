@@ -136,6 +136,7 @@ function processPages(){
 					
 					//Fetch data from localStorage and put into objects array
 						objects[id] = JSON.parse(localStorage.getItem("object_"+id));
+
 					}
 
 			//Fetch data via AJAX
@@ -154,6 +155,9 @@ function processPages(){
 				objects[id]['url'] = object_list[key]['url'];
 				objects[id]['interested'] = object_list[key]['interested'];
 			}
+
+	//Check if there are ongoing object AJAX reqs
+		checkOngoingObjectRequests();
 	}
 
 function buildObjectList(html_data){
@@ -244,7 +248,7 @@ function processObjectDeep(id){
 		//Set object tracking to complete
 			ongoing_requests[1][id] = false;
 
-		//Check if there are ongoing objects
+		//Check if there are ongoing object AJAX reqs
 			checkOngoingObjectRequests();
 		}
 	}
