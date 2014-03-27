@@ -44,14 +44,7 @@ function checkPageFetchCompletion(){
 
 	//If all pages have been fetched, proceed to process objects
 		if (count == ongoing_requests[0].length){
-			processObjects();
-			}
-	}
-
-function processObjects(){
-	//Iterate through objects
-		for (var k = 0; k < pages_data.length; k++){
-			extractObjects(pages_data[k]);
+			processPages();
 			}
 	}
 
@@ -114,6 +107,13 @@ function fetchPages(){
 				},
 			});
 	
+	}
+
+function processPages(){
+	//Iterate through objects
+		for (var k = 0; k < pages_data.length; k++){
+			extractObjects(pages_data[k]);
+			}
 	}
 
 function extractObjects(html_data){
