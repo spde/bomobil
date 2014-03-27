@@ -18,6 +18,56 @@
 	//Database version
 		database_ver = 1.1;
 
+//Initiate new Lawnchair object
+	var store = new Lawnchair({
+		adapter: "dom",
+		name: "bomobil_db"
+		},
+		function(store){});
+
+function clearLawnchair(){
+	store.nuke();
+	}
+
+function setLawnchair(key, object){
+	store.save({key: key, value: object});
+	}
+
+function getLawnchair(key){
+	temp = null;
+	store.get(key, function(result){
+		temp = result.value;
+		});
+	return temp;
+	}
+
+function removeLawnchair(key){
+	store.remove(key, function(){});
+	}
+
+function lengthLawnchair(){
+	length = 0;
+	store.keys(function(result){
+		length = result.length;
+		});
+	return length;
+	}
+
+function keysLawnchair(){
+	keys = Array();
+	store.keys(function(result){
+		keys = result;
+		});
+	}
+
+function keyLawnchair(index){
+	key = null;
+	store.keys(function(result){
+		key = result[index];
+		});
+	return key;
+	}
+
 function processPageData(x, page_number){
 	return function (returnData){
 		//Add page html to array
@@ -135,10 +185,10 @@ function processPages(){
 				objects[id] = {};
 
 			//Check if object already exists in localStorage
-				if (localStorage.getItem("object_"+id) != null){
+				if (getLawnchair("object_"+id) != null){
 					
 					//Fetch data from localStorage and put into objects array
-						objects[id] = JSON.parse(localStorage.getItem("object_"+id));
+						objects[id] = JSON.parse(getLawnchair("object_"+id));
 
 					}
 
@@ -189,12 +239,12 @@ function buildObjectList(html_data){
 function clearLocalStorageObjects(active_objects){
 	
 	//Check if database is latest version (if not, clear it)
-		if (localStorage.getItem("database_ver") != database_ver){
-			localStorage.clear();
-			localStorage.setItem("database_ver", database_ver);
+		if (getLawnchair("database_ver") != database_ver){
+			clearLawnchair();
+			setLawnchair("database_ver", database_ver);
 			}
 
-	for (z = 0; z < localStorage.length; z++){
+	for (z = 0; z < keysLawnchair(); z++){
 		exists = false;
 		for (key in active_objects){
 			if (localStorage.key(z) == "object_"+key){
@@ -203,7 +253,7 @@ function clearLocalStorageObjects(active_objects){
 				}
 			}
 		if (exists == false){
-			localStorage.removeItem(localStorage.key(z));
+			removeLawnchair(localStorage.key(z));
 			}
 		}
 	}
@@ -253,7 +303,7 @@ function processObjectDeep(id){
 			objects[id]['icons'] = $(returnData).find("tr[id=trIcons] a.apartment_detail_legend").map(function(){return {id: $(this).attr("id"), src: $("img", this).attr("src").trim().replace(/\.{2}\/\.{2}/, "http://www.boplats.se")};}).get();
 		
 		//Cache object to local storage
-			localStorage.setItem("object_"+id, JSON.stringify(objects[id]));
+			setLawnchair("object_"+id, JSON.stringify(objects[id]));
 
 		//Set object tracking to complete
 			ongoing_requests[1][id] = false;
