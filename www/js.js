@@ -123,10 +123,10 @@ function processPages(){
 		clearLocalStorageObjects(object_list);
 	
 	//Process objects
-		for (var k = 0; k < object_list.length; k++){
+		for (key in object_list){
 			
 			//Object ID
-				id = object_list.key(k);
+				id = key;
 
 			//Insert empty placeholder object
 				objects[id] = new Array();
@@ -151,8 +151,8 @@ function processPages(){
 
 			//Copy initial variables to object
 				objects[id]['id'] = id;
-				objects[id]['url'] = object_list[k]['url'];
-				objects[id]['interested'] = object_list[k]['interested'];
+				objects[id]['url'] = object_list[key]['url'];
+				objects[id]['interested'] = object_list[key]['interested'];
 			}
 	}
 
@@ -182,14 +182,14 @@ function buildObjectList(html_data){
 function clearLocalStorageObjects(active_objects){
 	for (z = 0; z < localStorage.length; z++){
 		exists = false;
-		for (y = 0; y < active_objects.length; y++){
-			if (localStorage.key(z) == "object_"+active_objects.key(y)){
+		for (key in active_objects){
+			if (localStorage.key(z) == "object_"+key){
 				exists = true;
 				break;
 				}
 			}
 		if (exists == false){
-			localStorage.removeItem(localStorage.key(z))
+			localStorage.removeItem(localStorage.key(z));
 			}
 		}
 	}
