@@ -94,11 +94,11 @@
 			});
 
 		$(document).ready(function(){
-			$("input, select, textarea").on("focus", function(){
+			$("input, textarea").on("focus", function(){
 				$("div[data-role='footer']").hide();
 				});
 
-			$("input, select, textarea").on("blur", function(){
+			$("input, textarea").on("blur", function(){
 				$("div[data-role='footer']").show();
 				});
 			});
