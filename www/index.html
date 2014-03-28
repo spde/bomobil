@@ -55,6 +55,7 @@
 
 		//Check UUID
 			$(document).on("deviceready", function(event){
+				navigator.notification.alert("message", function(){}, "title");
 				checkUUID();
 				});
 
