@@ -19,9 +19,10 @@
 	<script type="text/javascript" src="js.js"></script>
 	<script>
 
-		window.onerror = function(error) {
-			alert(error);
-			};
+		//Alert any error messages (debugging)
+			window.onerror = function(error) {
+				alert(error);
+				};
 
 		//Navbar/footer
 			$(function() {
@@ -43,23 +44,25 @@
 						});
 				});
 
-		$(document).on("deviceready", function(event){
-			checkUUID();
-			});
-
-		location.hash = "#splash";
-		
-		$(document).on("pagecreate", "#splash", function(event){
-			$( "#progressbar" ).progressbar({
-				value: 0,
-				change: function(){
-					$("#progressbar > .progress-label").text($("#progressbar").progressbar("value") + "%");
-					}
+		//Check UUID
+			$(document).on("deviceready", function(event){
+				checkUUID();
 				});
-			$("#progressbar").progressbar("value", 1);
 
-			fetchPages();
-		})
+		//Set initial splash page
+			location.hash = "#splash";
+			
+			$(document).on("pagecreate", "#splash", function(event){
+				$( "#progressbar" ).progressbar({
+					value: 0,
+					change: function(){
+						$("#progressbar > .progress-label").text($("#progressbar").progressbar("value") + "%");
+						}
+					});
+				$("#progressbar").progressbar("value", 1);
+
+				fetchPages();
+				});
 
 		$(document).on("pagehide", "#searchPage",function(){ // When leaving pagetwo
 			$.mobile.loading('show');
