@@ -141,14 +141,15 @@
 					if (typeof $.mobile.activePage == 'object'){
 						if($.mobile.activePage.attr("id") != data.toPage.attr("id")){
 							alert('showing loader1');
-							$.mobile.loading("show");
-							
+							//$.mobile.loading("show");
+							$('html').addClass( "ui-loading" );
 							}
 						}
 					}
 				else{
 					alert('showing loader2');
-					$.mobile.loading("show");
+					$('html').addClass( "ui-loading" );
+					//$.mobile.loading("show");
 					}
 				});
 
