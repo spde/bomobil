@@ -660,13 +660,13 @@ function checkUUID(){
 
 	//If no UUID exists in database, set one
 		if (getLawnchair("UUID") == null){
-			setLawnchair("UUID", deviceUUID);
+			setLawnchair("UUID", device.uuid);
 			}
 
 	//Check if database UUID does not match current UUID
-		if (getLawnchair("UUID") != deviceUUID){
+		if (getLawnchair("UUID") != device.uuid){
 			//Set new UUID
-				setLawnchair("UUID", deviceUUID);
+				setLawnchair("UUID", device.uuid);
 
 			//Clear login details in database
 				removeLawnchair("username");
@@ -677,14 +677,14 @@ function checkUUID(){
 
 function encrypt(string){
 	return string;
-	var key = hexToByteArray(deviceUUID);
+	var key = hexToByteArray(device.uuid);
 	var mode = 'ECB'; // ECB or CBC
 	return byteArrayToHex(rijndaelEncrypt(string,key, mode));
 	}
 
 function decrypt(encrypted_string){
 	return encrypted_string;
-	var key = hexToByteArray(deviceUUID);
+	var key = hexToByteArray(device.uuid);
 	var mode = 'ECB'; // ECB or CBC
 	return byteArrayToString(rijndaelDecrypt(hexToByteArray(encrypted_string), key, mode))
 	}
