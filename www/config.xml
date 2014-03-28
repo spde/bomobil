@@ -21,10 +21,6 @@
 		The "device" permission is required for the 'deviceready' event.
 	-->
 	<feature name="http://api.phonegap.com/1.0/device" />
-	<feature name="Notification">
-		<param name="ios-package" value="CDVNotification" />
-	</feature>
-
 
 	<!--
 		Specify target platforms
@@ -61,6 +57,7 @@
 	<gap:plugin name="org.apache.cordova.device" />
 	<gap:plugin name="org.apache.cordova.vibration" />
 	<gap:plugin name="org.apache.cordova.dialogs" />
+	<gap:plugin name="nl.x-services.plugins.socialsharing" />
 	<!--
 		<gap:plugin name="Example" />
 		A list of available plugins are available at https://build.phonegap.com/docs/plugins
