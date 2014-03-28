@@ -22,7 +22,7 @@
 
 		//Alert any error messages (debugging)
 			window.onerror = function(error) {
-				alert(error);
+				customAlert(error);
 				};
 
 		//Flush database if not latest version
@@ -55,7 +55,6 @@
 
 		//Check UUID
 			$(document).on("deviceready", function(event){
-				navigator.notification.alert("message", function(){}, "title");
 				checkUUID();
 				});
 

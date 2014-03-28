@@ -158,7 +158,7 @@ function fetchPages(){
 								dataType: 'html',
 								success: processPageData(i, page_number),
 								error: function(xhr, textStatus, error){
-									alert(xhr.statusText+", "+textStatus+", "+error);
+									customAlert(xhr.statusText+", "+textStatus+", "+error);
 									},
 								});
 							
@@ -173,7 +173,7 @@ function fetchPages(){
 
 				},
 			error: function(xhr, textStatus, error){
-				alert(xhr.statusText+", "+textStatus+", "+error)
+				customAlert(xhr.statusText+", "+textStatus+", "+error)
 				},
 			});
 	
@@ -276,7 +276,7 @@ function extractObjectDeep(id){
 			dataType: 'html',
 			success: processObjectDeep(id),
 			error: function(xhr, textStatus, error){
-				alert(xhr.statusText+", "+textStatus+", "+error)
+				customAlert(xhr.statusText+", "+textStatus+", "+error)
 				},
 			});
 	}
@@ -598,7 +598,7 @@ function addResultObject(object, collapsiblesetdiv){
 								})
 							.error(function(){
 								$("#image_object").remove();
-								alert(language["image_error_msg"]+" ("+this.src+")");
+								customAlert(language["image_error_msg"]+" ("+this.src+")");
 								console.log('image error:' + this.src);
 								})
 							.attr("src", event.data.imgs[0]);
@@ -685,10 +685,10 @@ function saveUserDetails(){
 	if ($("#username").val() != "" && $("#password").val() != ""){
 		setLawnchair("username", encrypt($("#username").val()));
 		setLawnchair("password", encrypt($("#password").val()));
-		login(function (param1){alert(param1);});
+		login(function (param1){customAlert(param1);});
 		}
 	else{
-		alert(language["login_error_msg1"]);
+		customAlert(language["login_error_msg1"]);
 		}
 	}
 
@@ -721,7 +721,7 @@ function login(callback){
 				},
 			success: processLoginForm(),
 			error: function(xhr, textStatus, error){
-				alert(xhr.status+", "+xhr.statusText+", "+textStatus+", "+error)
+				customAlert(xhr.status+", "+xhr.statusText+", "+textStatus+", "+error)
 				},
 			});
 	}
@@ -735,13 +735,13 @@ function processLoginForm(){
 		if (returnData != null){
 			if ($(returnData).find("input[id=ucTop_btnLogin]").length > 0){
 				if ($(returnData).find("input[id=ucTop_btnLogin]").val() == "Logga ut"){
-					alert('true in processLoginForm');
+					customAlert('true in processLoginForm');
 					return true;
 					}
 				}
 			}
 		else{
-			alert('false in processLoginForm');
+			customAlert('false in processLoginForm');
 			return false;
 			}
 		}
@@ -769,4 +769,12 @@ function setLanguage(lang){
 			$(this).text(language[$(this).attr("lang-id")]);
 			});
 		$("body").removeClass("ui-loading");
+	}
+
+function customAlert(message, vibrate){
+	navigator.notification.customAlert(message, function(){}, null);
+	if (typeof(vibrate) !== "undefined" && vibrate == true){
+		navigator.notification.vibrate(1000);
+		}
+
 	}
