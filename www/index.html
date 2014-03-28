@@ -25,6 +25,14 @@
 				alert(error);
 				};
 
+		//Flush database if not latest version
+			$(document).ready(function(){
+				if (getLawnchair("database_ver") != database_ver){
+					clearLawnchair();
+					setLawnchair("database_ver", database_ver);
+					}
+				});
+
 		//Navbar/footer
 			$(function() {
 				$( "[data-role='navbar']" ).navbar();
@@ -48,6 +56,23 @@
 		//Check UUID
 			$(document).on("deviceready", function(event){
 				checkUUID();
+				});
+
+		//Set language
+			$(document).ready(function(){
+				setLanguage();
+				$("#language_selector").change(function(){
+					setLanguage($(this).val());
+					});
+
+				//Populate language selector
+					$(available_languages).each(function(){
+						var option = $("<option>")
+							.appendTo($("#language_selector"))
+							.val(this.code)
+							.text(this.lable)
+							.prop("selected", (getLawnchair("language") == this.code ? true : false))
+						});
 				});
 
 		//Set initial splash page
@@ -155,6 +180,8 @@
 				$("body").removeClass("ui-loading");
 				});
 
+		
+
 	</script>
 	<style>
 		label {
@@ -187,15 +214,14 @@
 
 <div data-role="page" id="searchPage">
 	<div role="main" class="ui-content">
-		<!--<input type=button value=SE onclick="changeLanguage('SE');">-->
 		<div data-role="collapsibleset" data-theme="a" data-content-theme="a" data-inset="false">
 			
 			<div data-role="collapsible">
 				
-				<h3>Rooms</h3>
+				<h3 lang-id="rooms">Rooms</h3>
 				<fieldset data-role="controlgroup" data-type="horizontal">
-					<legend>Min / Max</legend>
-					<label for=min_rooms>Min</label>
+					<legend><span lang-id="min">Min</span> / <span lang-id="max">Max</span></legend>
+					<label for=min_rooms lang-id="min">Min</label>
 					<select id=min_rooms>
 						<option>1</option>
 						<option>2</option>
@@ -203,7 +229,7 @@
 						<option>4</option>
 						<option>5</option>
 					</select>
-					<label for=max_rooms>Max</label>
+					<label for=max_rooms lang-id="max">Max</label>
 					<select id=max_rooms>
 						<option>1</option>
 						<option>2</option>
@@ -215,14 +241,14 @@
 			</div>
 
 			<div data-role="collapsible">
-				<h3>Cost</h3>
+				<h3 lang-id="cost">Cost</h3>
 				<fieldset data-role="controlgroup" data-type="horizontal">
 					<div class=ui-grid-a>
 						<div class=ui-block-a style='width:50%'>
-							<label for=min_cost>Min</label>
+							<label for=min_cost lang-id="min">Min</label>
 						</div>
 						<div class=ui-block-b style='width:50%'>
-							<label for=max_cost>Max</label>
+							<label for=max_cost lang-id="max">Max</label>
 						</div>
 					</div>
 					<div class=ui-grid-a>
@@ -237,14 +263,14 @@
 			</div>
 
 			<div data-role="collapsible">
-				<h3>Size</h3>
+				<h3 lang-id="size">Size</h3>
 				<fieldset data-role="controlgroup" data-type="horizontal">
 					<div class=ui-grid-a>
 						<div class=ui-block-a style='width:50%'>
-							<label for=min_size>Min</label>
+							<label for=min_size lang-id="min">Min</label>
 						</div>
 						<div class=ui-block-b style='width:50%'>
-							<label for=max_size>Max</label>
+							<label for=max_size lang-id="max">Max</label>
 						</div>
 					</div>
 					<div class=ui-grid-a>
@@ -259,10 +285,10 @@
 			</div>
 
 			<div data-role="collapsible">
-				<h3>Floor</h3>
+				<h3 lang-id="floor">Floor</h3>
 				<fieldset data-role="controlgroup" data-type="horizontal">
-					<legend>Min / Max</legend>
-					<label for=min_floor>Min</label>
+					<legend><span lang-id="min">Min</span> / <span lang-id="max">Max</span></legend>
+					<label for=min_floor lang-id="min">Min</label>
 					<select id=min_floor>
 						<option>0</option>
 						<option>1</option>
@@ -278,7 +304,7 @@
 						<option>11</option>
 						<option>12</option>
 					</select>
-					<label for=max_floor>Max</label>
+					<label for=max_floor lang-id="max">Max</label>
 					<select id=max_floor>
 						<option>0</option>
 						<option>1</option>
@@ -298,56 +324,56 @@
 			</div>
 
 			<div data-role="collapsible">
-				<h3>Area</h3>
+				<h3 lang-id="area">Area</h3>
 				<fieldset data-role="controlgroup">
-					<input type=checkbox id=area[1] value="Centrum" checked><label for=area[1]>Centrum</label>
+					<input type=checkbox id=area[1] value="Centrum" checked><label for=area[1] lang-id="centre">Centrum</label>
 					<input type=checkbox id=area[2] value="Hisingen" checked><label for=area[2]>Hisingen</label>
-					<input type=checkbox id=area[3] value="Kommuner nära Göteborg" checked><label for=area[3]>Kommuner nära Göteborg</label>
+					<input type=checkbox id=area[3] value="Kommuner nära Göteborg" checked><label for=area[3] lang-id="counties_near_gothenburg">Kommuner nära Göteborg</label>
 					<input type=checkbox id=area[4] value="Mölndal" checked><label for=area[4]>Mölndal</label>
-					<input type=checkbox id=area[5] value="Norr" checked><label for=area[5]>Norr</label>
+					<input type=checkbox id=area[5] value="Norr" checked><label for=area[5] lang-id="north">Norr</label>
 					<input type=checkbox id=area[6] value="Partille" checked><label for=area[6]>Partille</label>
-					<input type=checkbox id=area[7] value="Väster" checked><label for=area[7]>Väster</label>
-					<input type=checkbox id=area[8] value="Öster" checked><label for=area[8]>Öster</label>
+					<input type=checkbox id=area[7] value="Väster" checked><label for=area[7] lang-id="west">Väster</label>
+					<input type=checkbox id=area[8] value="Öster" checked><label for=area[8] lang-id="east">Öster</label>
 				</fieldset>
 			</div>
 
 			<div data-role="collapsible">
-				<h3>Available from</h3>
+				<h3 lang-id="available_from">Available from</h3>
 				<fieldset data-role="controlgroup">
 					<input data-role="date" type="date" id="available">
 				</fieldset>
 			</div>
 
 			<div data-role="collapsible">
-				<h3>Other</h3>
+				<h3 lang-id="other">Other</h3>
 				<fieldset data-role="controlgroup">
-					<input type=checkbox id=icon[1] value="hlDisabilityAccessImg" checked><label for=icon[1]>Tillgänglighet</label>
-					<input type=checkbox id=icon[2] value="hlNewlyProducedImg" checked><label for=icon[2]>Nyproduktion</label>
-					<input type=checkbox id=icon[3] value="hlSeniorImg" checked><label for=icon[3]>Seniorboende</label>
-					<input type=checkbox id=icon[4] value="hlShorttimeImg" checked><label for=icon[4]>Korttidsboende</label>
-					<input type=checkbox id=icon[5] value="hlStudentImg" checked><label for=icon[5]>Studentlägenhet</label>
-					<input type=checkbox id=icon[6] value="hlYouthImg" checked><label for=icon[6]>Ungahem</label>
-					<input type=checkbox id=icon[7] value="hlDirectSearchImg" checked><label for=icon[7]>Snabb inflyttning</label>
-					<input type=checkbox id=icon[8] value="hlMissingTentureImg" checked><label for=icon[8]>Bibehållen registreringstid</label>
+					<input type=checkbox id=icon[1] value="hlDisabilityAccessImg" checked><label for=icon[1] lang-id="disability_access">Tillgänglighet</label>
+					<input type=checkbox id=icon[2] value="hlNewlyProducedImg" checked><label for=icon[2] lang-id="newly_produced">Nyproduktion</label>
+					<input type=checkbox id=icon[3] value="hlSeniorImg" checked><label for=icon[3] lang-id="senior_apartment">Seniorboende</label>
+					<input type=checkbox id=icon[4] value="hlShorttimeImg" checked><label for=icon[4] lang-id="short_term_rental">Korttidsboende</label>
+					<input type=checkbox id=icon[5] value="hlStudentImg" checked><label for=icon[5] lang-id="student_apartment">Studentlägenhet</label>
+					<input type=checkbox id=icon[6] value="hlYouthImg" checked><label for=icon[6] lang-id="youth_apartment">Ungahem</label>
+					<input type=checkbox id=icon[7] value="hlDirectSearchImg" checked><label for=icon[7] lang-id="instant_move_in">Snabb inflyttning</label>
+					<input type=checkbox id=icon[8] value="hlMissingTentureImg" checked><label for=icon[8] lang-id="maintained_registration_date">Bibehållen registreringstid</label>
 				</fieldset>
 			</div>
 
 			<div data-role="collapsible">
-				<h3>Sort</h3>
+				<h3 lang-id="sort">Sort</h3>
 				<ul data-role="listview" data-inset="true" data-theme="a" id="sort_list">
-					<li class="ui-input-btn ui-btn ui-icon-bars ui-nodisc-icon ui-btn-icon-right" value="area">Area</li>
-					<li class="ui-input-btn ui-btn ui-icon-bars ui-nodisc-icon ui-btn-icon-right" value="address">Address</li>
-					<li class="ui-input-btn ui-btn ui-icon-bars ui-nodisc-icon ui-btn-icon-right" value="cost">Cost</li>
-					<li class="ui-input-btn ui-btn ui-icon-bars ui-nodisc-icon ui-btn-icon-right" value="rooms">Rooms</li>
-					<li class="ui-input-btn ui-btn ui-icon-bars ui-nodisc-icon ui-btn-icon-right" value="interested">Interested</li>
-					<li class="ui-input-btn ui-btn ui-icon-bars ui-nodisc-icon ui-btn-icon-right" value="size">Size</li>
-					<li class="ui-input-btn ui-btn ui-icon-bars ui-nodisc-icon ui-btn-icon-right" value="floor">Floor</li>
+					<li class="ui-input-btn ui-btn ui-icon-bars ui-nodisc-icon ui-btn-icon-right" value="area" lang-id="area">Area</li>
+					<li class="ui-input-btn ui-btn ui-icon-bars ui-nodisc-icon ui-btn-icon-right" value="address" lang-id="address">Address</li>
+					<li class="ui-input-btn ui-btn ui-icon-bars ui-nodisc-icon ui-btn-icon-right" value="cost" lang-id="cost">Cost</li>
+					<li class="ui-input-btn ui-btn ui-icon-bars ui-nodisc-icon ui-btn-icon-right" value="rooms" lang-id="rooms">Rooms</li>
+					<li class="ui-input-btn ui-btn ui-icon-bars ui-nodisc-icon ui-btn-icon-right" value="interested" lang-id="interested">Interested</li>
+					<li class="ui-input-btn ui-btn ui-icon-bars ui-nodisc-icon ui-btn-icon-right" value="size" lang-id="size">Size</li>
+					<li class="ui-input-btn ui-btn ui-icon-bars ui-nodisc-icon ui-btn-icon-right" value="floor" lang-id="floor">Floor</li>
 				</ul>
 			</div>
 
 		</div>
 
-		<a class="ui-btn" href="#resultsPage">Search</a>
+		<a class="ui-btn" href="#resultsPage" lang-id="search">Search</a>
 	</div>
 </div>
 
@@ -365,17 +391,19 @@
 
 <div data-role="page" id="userPage">
 	<div role="main" class="ui-content" data-tolerance=>
-		<label for=username>Username</label>
+		<label for=username lang-id="username">Username</label>
 		<input type=text id=username>
-		<label for=password>Password</label>
+		<label for=password lang-id="password">Password</label>
 		<input type=password id=password>
-		<a class="ui-btn" onclick="saveUserDetails()">Save</a>
+		<a class="ui-btn" onclick="saveUserDetails()" lang-id="save">Save</a>
+		<select id=language_selector>
+		</select>
 	</div>
 </div>
 
 <div data-role="page" id="splash">
 	<div role="main" class="ui-content">
-		LOADING...
+		<span lang-id="loading">LOADING</span>...
 		<div id="progressbar"><div class="progress-label"></div></div>
 	</div>
 </div>
@@ -388,6 +416,5 @@
 		</ul>
 	</div>
 </div>
-
 </body>
 </html>

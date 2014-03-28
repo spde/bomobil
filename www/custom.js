@@ -16,7 +16,13 @@
 		var sorting_order = new Array();
 
 	//Database version
-		database_ver = 1.1;
+		var database_ver = 0.2;
+
+	//Available languages
+		var available_languages = [{code: "se", lable: "Svenska"}, {code: "en", lable: "English"}];
+
+	//Define empty language object
+		var language = {};
 
 //Initiate new Lawnchair object
 	var store = new Lawnchair({
@@ -245,12 +251,6 @@ function buildObjectList(html_data){
 	}
 
 function clearLocalStorageObjects(active_objects){
-	
-	//Check if database is latest version (if not, clear it)
-		if (getLawnchair("database_ver") != database_ver){
-			clearLawnchair();
-			setLawnchair("database_ver", database_ver);
-			}
 
 	for (z = 0; z < keysLawnchair(); z++){
 		exists = false;
@@ -304,7 +304,7 @@ function processObjectDeep(id){
 			objects[id]['area'] = $(returnData).find("span[id=lblArea]").text().trim();
 			objects[id]['area2'] = $(returnData).find("a[id=lblArea2]").text().trim();
 			objects[id]['description'] = $(returnData).find("span[id=lblDescription]").text().trim();
-			objects[id]['planning'] = $(returnData).find("span[id=lblPlanning]").text().trim();
+			objects[id]['floor_plan'] = $(returnData).find("span[id=lblPlanning]").text().trim();
 			objects[id]['properties'] = $(returnData).find("table[id=dlProperties] b").map(function(){return $(this).text().trim()}).get().join(", ");
 			objects[id]['images'] = $(returnData).find("table[id=dlMultimedia] img").map(function(){pattern = /ico_pdf\.gif$/; if (pattern.test($(this).attr("src")) == false && validateContentType("http://www.boplats.se"+$(this).attr("src").trim(), "image") == true){return "http://www.boplats.se"+$(this).attr("src").trim()}}).get();
 			objects[id]['pdfs'] = $(returnData).find("table[id=dlMultimedia] a").map(function(){return $(this).attr("href").trim().replace(/\.{2}\/\.{2}/, "http://www.boplats.se")}).get();
@@ -482,7 +482,7 @@ function addResultObject(object, collapsiblesetdiv){
 
 	//Add header
 		var header = $("<h3>").appendTo(collapsiblediv);
-		header.html(object['address'] + " (" + object['area2'] + ", " + object['area'] + ")");
+		header.html(object['address'] + " (" + object['area2'] + ", " + (typeof(language[object["area"]]) !== "undefined" ? language[object["area"]] : object["area"]) + ")");
 	
 	//Add body (<p>)
 		var p = $("<p>").appendTo(collapsiblediv);
@@ -503,10 +503,10 @@ function addResultObject(object, collapsiblesetdiv){
 
 	//Grid of details
 		grid = Array(
-			Array("Hyra", object['cost'], "Rum", object['rooms']),
-			Array("Tillträde", object['move_in_date'], "Våning", object['floor']),
-			Array("Tillgänglig", object['available_date'], "Storlek", object['size'].join("&nbsp;")),
-			Array("Anm. datum", object['last_reg_date'], "Anmäl.", object['interested']),
+			Array(language["cost"], object['cost'], language["rooms"], object['rooms']),
+			Array(language["access"], object['move_in_date'], language["floor"], object['floor']),
+			Array(language["available"], object['available_date'], language["size"], object['size'].join("&nbsp;")),
+			Array(language["signup_date_short"], object['last_reg_date'], language["interested_short"], object['interested']),
 			Array("Boplats&nbsp;ID", object['boplats_id'], null, icons_div)
 			);
 
@@ -535,7 +535,7 @@ function addResultObject(object, collapsiblesetdiv){
 		if (typeof(object['description']) !== 'undefined'){
 			var div = $("<div>")
 				.addClass("bold")
-				.html("Beskrivning");
+				.html(language["description"]);
 			p.append(div).append(object['description'].replace(/(<([^>]+)>)/ig,""));
 			}
 	
@@ -543,16 +543,16 @@ function addResultObject(object, collapsiblesetdiv){
 		if (typeof(object['properties']) !== 'undefined'){
 			var div = $("<div>")
 				.addClass("bold")
-				.html("Bostaden har");
+				.html(language["properties"]);
 			p.append(div).append(object['properties'].replace(/(<([^>]+)>)/ig,""));
 			}
 
-	//Planning
-		if (typeof(object['planning']) !== 'undefined'){
+	//Floor plan
+		if (typeof(object['floor_plan']) !== 'undefined'){
 			var div = $("<div>")
 				.addClass("bold")
-				.html("Planlösning");
-			p.append(div).append(object['planning'].replace(/(<([^>]+)>)/ig,""));
+				.html(language["floor_plan"]);
+			p.append(div).append(object['floor_plan'].replace(/(<([^>]+)>)/ig,""));
 			}
 	
 	//Buttons
@@ -562,11 +562,8 @@ function addResultObject(object, collapsiblesetdiv){
 			location_btn = $("<a>")
 				.appendTo(buttons_div)
 				.addClass("ui-btn ui-shadow ui-corner-all ui-icon-location ui-btn-icon-notext")
-				.html("Location")
 				.click({address: object['address'], area: (object['area'] == "Kommuner nära Göteborg" ? object['area2'] : "Göteborg")}, function(event){
-
 					$("#mapIframe").get(0).contentWindow.setAddressMarker(event.data.address+", "+event.data.area);
-					
 					$("#mapPopup").popup("open", {
 						"positionTo": "window",
 						"transition": "fade",
@@ -584,7 +581,6 @@ function addResultObject(object, collapsiblesetdiv){
 				image_btn = $("<a>")
 					.appendTo(buttons_div)
 					.addClass("ui-btn ui-shadow ui-corner-all ui-icon-camera ui-btn-icon-notext")
-					.html("Photos")
 					.click({imgs: object['images']}, function(event){
 						img = $("<img>")
 							.attr("id", "image_object")
@@ -602,7 +598,7 @@ function addResultObject(object, collapsiblesetdiv){
 								})
 							.error(function(){
 								$("#image_object").remove();
-								alert("Kunde inte ladda bild, fel på bilden ("+this.src+")");
+								alert(language["image_error_msg"]+" ("+this.src+")");
 								console.log('image error:' + this.src);
 								})
 							.attr("src", event.data.imgs[0]);
@@ -615,7 +611,6 @@ function addResultObject(object, collapsiblesetdiv){
 				pdf_btn = $("<a>")
 					.appendTo(buttons_div)
 					.addClass("ui-btn ui-shadow ui-corner-all ui-icon-grid ui-btn-icon-notext")
-					.html("PDFs");
 				pdf_btn.click({pdfs: object['pdfs']}, function(event){
 					window.open(event.data.pdfs[0], "_blank", "location=no,EnableViewPortScale=yes");
 					});
@@ -693,7 +688,7 @@ function saveUserDetails(){
 		login(function (param1){alert(param1);});
 		}
 	else{
-		alert("Fyll i användaruppgifter");
+		alert(language["login_error_msg1"]);
 		}
 	}
 
@@ -750,4 +745,28 @@ function processLoginForm(){
 			return false;
 			}
 		}
+	}
+
+function setLanguage(lang){
+	
+	//Get browser language
+		browser_language = $.localise.defaultLanguage.substring(0, 2);
+
+	//No language has been previously selected, set a default language
+		if (getLawnchair("language") == null){
+			setLawnchair("language", $.localise.defaultLanguage);
+			}
+
+	//If variable lang is provided
+		if (typeof(lang) !== "undefined"){
+			setLawnchair("language", lang);
+			}
+
+	//Load language into items
+		$.localise("lang", {language: getLawnchair("language"), path: "languages/"});
+		$("body").addClass("ui-loading");
+		$("[lang-id]").each(function(){
+			$(this).text(language[$(this).attr("lang-id")]);
+			});
+		$("body").removeClass("ui-loading");
 	}
