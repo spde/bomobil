@@ -93,11 +93,11 @@
 
 		//Hide navbar on input/textarea focus
 			$(document).ready(function(){
-				$("input, textarea").on("focus", function(){
+				$("input, textarea, select").on("focus", function(){
 					$("div[data-role='footer']").hide();
 					});
 
-				$("input, textarea").on("blur", function(){
+				$("input, textarea, select").on("blur", function(){
 					$("div[data-role='footer']").show();
 					});
 				});
