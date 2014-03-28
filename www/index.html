@@ -65,7 +65,7 @@
 			checkUUID();
 			});
 
-		location.hash = "#userPage";
+		location.hash = "#splash";
 		
 		$(document).on("pagecreate", "#splash", function(event){
 			$( "#progressbar" ).progressbar({
@@ -76,7 +76,7 @@
 				});
 			$("#progressbar").progressbar("value", 1);
 
-			//fetchPages();
+			fetchPages();
 		})
 
 		$(document).on("pagehide", "#searchPage",function(){ // When leaving pagetwo
