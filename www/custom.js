@@ -621,8 +621,7 @@ function addResultObject(object, collapsiblesetdiv){
 				.appendTo(buttons_div)
 				.addClass("ui-btn ui-shadow ui-corner-all ui-icon-facebook ui-btn-icon-notext")
 				.click({id: object["id"], address: object["address"]}, function(event){
-					window.plugins.socialsharing.shareViaFacebook(event.data.address, null, null, "http://www.boplats.se/HSS/Object/object_details.aspx?objectguid="+event.data.id, function() {console.log('share ok'); alert('share ok')}, function(errormsg){alert(errormsg)});
-					window.plugins.socialsharing.shareViaFacebook(event.data.address, null, "http://www.boplats.se/HSS/Object/object_details.aspx?objectguid="+event.data.id, function() {console.log('share ok'); alert('share ok')}, function(errormsg){alert(errormsg)});
+					window.plugins.socialsharing.shareViaFacebook(event.data.address, null, "http://www.boplats.se/HSS/Object/object_details.aspx?objectguid="+event.data.id, function() {console.log('share ok')}, function(errormsg){customAlert(errormsg)});
 					});
 
 	}
