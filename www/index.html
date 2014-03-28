@@ -23,6 +23,26 @@
 			alert(error);
 			};
 
+		//Navbar/footer
+			$(function() {
+				$( "[data-role='navbar']" ).navbar();
+				$( "[data-role='header'], [data-role='footer']" ).toolbar();
+			});
+
+			$(document).on("pageshow", "[data-role='page']", function(){
+				
+				// Remove active class from nav buttons
+					$("[data-role='navbar'] a.ui-btn-active").removeClass("ui-btn-active");
+				
+				// Add active class to current nav button
+					current_page = $(this).attr("id");
+					$("[data-role='navbar'] a").each(function(){
+						if ($(this).attr("href") === "#"+current_page){
+							$(this).addClass("ui-btn-active");
+							}
+						});
+				});
+
 		var deviceUUID = null;
 
 		// Wait for device API libraries to load
@@ -38,8 +58,6 @@
 								'Device UUID: '     + device.uuid     + '<br />' +
 								'Device Version: '  + device.version  + '<br />');
 		}
-
-
 
 		$(document).on("deviceready", function(event){
 			alert(device.uuid);
@@ -351,24 +369,10 @@
 
 		<a class="ui-btn" href="#resultsPage">Search</a>
 	</div>
-	<div data-role="footer" data-position="fixed" data-id="pagefooter">
-		<div data-role="navbar">
-			<ul>
-				<li><a href="#searchPage" data-icon="home" data-iconpos="notext" data-direction="reverse">Home</a></li>
-				<li><a href="#searchPage" data-icon="search" data-iconpos="notext" data-transition="fade">Search</a></li>
-				<li><a href="#userPage" data-icon="user" data-iconpos="notext" data-transition="fade">User</a></li>
-			</ul>
-		</div>
-	</div>
 </div>
 
 <div data-role="page" id="resultsPage">
 	<div role="main" class="ui-content" data-tolerance=>
-	</div>
-	<div data-role="footer" data-position="fixed" data-id="pagefooter">
-		<a href="#searchPage" data-icon="home" data-iconpos="notext" data-direction="reverse">Home</a>
-		<a href="#searchPage" data-icon="search" data-iconpos="notext" data-transition="fade">Search</a>
-		<a href="#userPage" data-icon="user" data-iconpos="notext" data-transition="fade">User</a>
 	</div>
 	<div data-role="popup" id="mapPopup" data-overlay-theme="a" data-theme="a" data-corners="false" data-position-to="window">
 		<a href="#" data-rel="back" class="ui-btn ui-corner-all ui-shadow ui-btn-a ui-icon-delete ui-btn-icon-notext ui-btn-right">Close</a>
@@ -387,17 +391,21 @@
 		<input type=password id=password>
 		<a class="ui-btn" onclick="saveUserDetails()">Save</a>
 	</div>
-	<div data-role="footer" data-position="fixed" data-id="pagefooter">
-		<a href="#searchPage" data-icon="home" data-iconpos="notext" data-direction="reverse">Home</a>
-		<a href="#searchPage" data-icon="search" data-iconpos="notext" data-transition="fade">Search</a>
-		<a href="#userPage" data-icon="user" data-iconpos="notext" data-transition="fade">User</a>
-	</div>
 </div>
 
 <div data-role="page" id="splash">
 	<div role="main" class="ui-content">
 		LOADING...
 		<div id="progressbar"><div class="progress-label"></div></div>
+	</div>
+</div>
+
+<div data-role="footer" data-position="fixed" data-theme="a">
+	<div data-role="navbar">
+		<ul>
+			<li><a href="#searchPage" class="ui-state-persist" data-icon="search" data-transition="fade"></a></li>
+			<li><a href="#userPage" class="ui-state-persist" data-icon="user" data-transition="fade"></a></li>
+		</ul>
 	</div>
 </div>
 
