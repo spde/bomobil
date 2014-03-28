@@ -140,11 +140,14 @@
 				if (typeof data.toPage == 'object'){
 					if (typeof $.mobile.activePage == 'object'){
 						if($.mobile.activePage.attr("id") != data.toPage.attr("id")){
+							alert('showing loader1');
 							$.mobile.loading("show");
+							
 							}
 						}
 					}
 				else{
+					alert('showing loader2');
 					$.mobile.loading("show");
 					}
 				});
