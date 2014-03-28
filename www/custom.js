@@ -611,10 +611,18 @@ function addResultObject(object, collapsiblesetdiv){
 				pdf_btn = $("<a>")
 					.appendTo(buttons_div)
 					.addClass("ui-btn ui-shadow ui-corner-all ui-icon-grid ui-btn-icon-notext")
-				pdf_btn.click({pdfs: object['pdfs']}, function(event){
-					window.open(event.data.pdfs[0], "_blank", "location=no,EnableViewPortScale=yes");
-					});
+					.click({pdfs: object['pdfs']}, function(event){
+						window.open(event.data.pdfs[0], "_blank", "location=no,EnableViewPortScale=yes");
+						});
 				}
+
+		//Facebook button
+			facebook_btn = $("<a>")
+				.appendTo(buttons_div)
+				.addClass("ui-btn ui-shadow ui-corner-all ui-icon-facebook ui-btn-icon-notext")
+				.click({id: object["id"], address: object["address"]}, function(event){
+					window.plugins.socialsharing.shareViaFacebook(event.data.address, null, null, "http://www.boplats.se/HSS/Object/object_details.aspx?objectguid="+event.data.id, function() {console.log('share ok')}, function(errormsg){});
+					});
 
 	}
 
