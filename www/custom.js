@@ -774,7 +774,16 @@ function setLanguage(lang){
 		$.localise("lang", {language: getLawnchair("language"), path: "languages/"});
 		$("body").addClass("ui-loading");
 		$("[lang-id]").each(function(){
-			$(this).text(language[$(this).attr("lang-id")]);
+			
+			//Exception for collapsible headings
+				if ($(this).hasClass("ui-collapsible-heading")){
+					$("a", this).html(language[$(this).attr("lang-id")]+"<span class='ui-collapsible-heading-status'> click to expand contents</span>");
+					}
+			
+			//Else
+				else{
+					$(this).text(language[$(this).attr("lang-id")]);
+					}
 			});
 		$("body").removeClass("ui-loading");
 	}
