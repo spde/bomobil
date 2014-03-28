@@ -464,7 +464,6 @@ function showResults(){
 			}
 
 	//Append to results page
-		$("#resultsPage div[role='main']").empty();
 		$("#resultsPage div[role='main']").append(collapsiblesetdiv);
 	
 	//Activate collapsibleset widget
@@ -724,7 +723,7 @@ function login(callback){
 			dataType: 'html',
 			beforesend: function() {
 				$.mobile.loader("show");
-				}
+				},
 			success: processLoginForm(),
 			error: function(xhr, textStatus, error){
 				alert(xhr.status+", "+xhr.statusText+", "+textStatus+", "+error)
