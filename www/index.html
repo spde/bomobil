@@ -175,6 +175,10 @@
 					});		
 
 		//Show page loader during page switch
+			$(document).on("mobileinit", function(){
+				alert("mobileinit");
+				});
+			
 			$(document).on("pagebeforeshow", function(){
 				//$("body").addClass("ui-loading");
 				alert("pagebeforeshow");
