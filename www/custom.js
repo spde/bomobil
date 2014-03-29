@@ -869,7 +869,7 @@ function onDeviceReady(){
 
 	//Set initial splash page
 		location.hash = "#splash";
-		$( "#progressbar" ).progressbar({
+		$("#progressbar").progressbar({
 			value: 0,
 			change: function(){
 				$("#progressbar > .progress-label").text($("#progressbar").progressbar("value") + "%");
