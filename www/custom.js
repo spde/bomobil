@@ -572,6 +572,7 @@ function addResultObject(object, collapsiblesetdiv){
 				.appendTo(buttons_div)
 				.addClass("ui-btn ui-shadow ui-corner-all ui-icon-location ui-btn-icon-notext")
 				.click({address: object['address'], area: (object['area'] == "Kommuner nära Göteborg" ? object['area2'] : "Göteborg")}, function(event){
+					spinnerplugin.show({overlay: true});
 					$("#mapIframe").get(0).contentWindow.setAddressMarker(event.data.address+", "+event.data.area);
 					$("#mapPopup").popup("open", {
 						"positionTo": "window",
@@ -591,6 +592,7 @@ function addResultObject(object, collapsiblesetdiv){
 					.appendTo(buttons_div)
 					.addClass("ui-btn ui-shadow ui-corner-all ui-icon-camera ui-btn-icon-notext")
 					.click({imgs: object['images']}, function(event){
+						spinnerplugin.show({overlay: true});
 						img = $("<img>")
 							.attr("id", "image_object")
 							.addClass("photo")
@@ -608,6 +610,7 @@ function addResultObject(object, collapsiblesetdiv){
 							.error(function(){
 								$("#image_object").remove();
 								customAlert(language["image_error_msg"]+" ("+this.src+")");
+								spinnerplugin.hide();
 								console.log('image error:' + this.src);
 								})
 							.attr("src", event.data.imgs[0]);
@@ -630,7 +633,8 @@ function addResultObject(object, collapsiblesetdiv){
 				.appendTo(buttons_div)
 				.addClass("ui-btn ui-shadow ui-corner-all ui-icon-facebook ui-btn-icon-notext")
 				.click({id: object["id"], address: object["address"]}, function(event){
-					window.plugins.socialsharing.shareViaFacebook(event.data.address, null, "http://www.boplats.se/HSS/Object/object_details.aspx?objectguid="+event.data.id, function() {console.log('share ok')}, function(errormsg){customAlert(errormsg)});
+					spinnerplugin.show({overlay: true});
+					window.plugins.socialsharing.shareViaFacebook(event.data.address, null, "http://www.boplats.se/HSS/Object/object_details.aspx?objectguid="+event.data.id, function() {console.log('share ok'); spinnerplugin.hide();}, function(errormsg){customAlert(errormsg); spinnerplugin.hide();});
 					});
 
 		//Twitter button
@@ -638,7 +642,8 @@ function addResultObject(object, collapsiblesetdiv){
 				.appendTo(buttons_div)
 				.addClass("ui-btn ui-shadow ui-corner-all ui-icon-twitter ui-btn-icon-notext")
 				.click({id: object["id"], address: object["address"]}, function(event){
-					window.plugins.socialsharing.shareViaTwitter(event.data.address, null, "http://www.boplats.se/HSS/Object/object_details.aspx?objectguid="+event.data.id, function() {console.log('share ok')}, function(errormsg){customAlert(errormsg)});
+					spinnerplugin.show({overlay: true});
+					window.plugins.socialsharing.shareViaTwitter(event.data.address, null, "http://www.boplats.se/HSS/Object/object_details.aspx?objectguid="+event.data.id, function() {console.log('share ok'); spinnerplugin.hide();}, function(errormsg){customAlert(errormsg); spinnerplugin.hide();});
 					});
 
 	}
@@ -911,6 +916,10 @@ function onDeviceReady(){
 				$(this).popup("option", "tolerance", "15,15,53,15");
 
 			});
+
+		$(document).on("popupafteropen", "#imagePopup, #pdfPopup, #mapPopup", function(){
+			 spinnerplugin.hide();
+			})
 		
 		$(document).on("popupafterclose", "#imagePopup, #pdfPopup, #mapPopup", function(){
 			
