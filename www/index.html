@@ -173,15 +173,15 @@
 
 		//Show page loader during page switch
 			$(document).on("pagebeforeshow", function(){
-				$("body").addClass("ui-loading");
+				//$("body").addClass("ui-loading");
 				//spinnerplugin.show({overlay: false});
-				//customAlert("show loadier", 1000);
+				customAlert("show loadier", 1000);
 				});
 
 			$(document).on("pageshow", function(){
-				$("body").removeClass("ui-loading");
+				//$("body").removeClass("ui-loading");
 				//spinnerplugin.hide();
-				//customAlert("hide loadier", 1000);
+				customAlert("hide loadier", 1000);
 				});
 
 		
