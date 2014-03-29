@@ -124,7 +124,7 @@ function fetchPages(){
 		ongoing_requests[0][0] = true;
 
 	//Show loader
-		spinnerplugin.show({overlay: true});
+		spinnerplugin.show({overlay: false});
 	
 	//Initiate initial AJAX req (first page)
 		$.ajax({
@@ -956,14 +956,10 @@ function onDeviceReady(){
 	//Show page loader during page switch
 		
 		$(document).on("pagebeforeshow", function(){
-			//$("body").addClass("ui-loading");
 			spinnerplugin.show({overlay: true});
-			customAlert("show loader", 1000);
 			});
 
 		$(document).on("pageshow", function(){
-			//$("body").removeClass("ui-loading");
 			spinnerplugin.hide();
-			customAlert("hide loader", 1000);
 			});
 	}
