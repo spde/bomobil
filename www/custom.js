@@ -952,14 +952,14 @@ function onDeviceReady(){
 
 	//Show results on #resultsPage
 		
-			$(document).on("pagecontainerbeforehide", "#searchPage", function(event, ui){
+			$(document).on("pagebeforehide", "#searchPage", function(event, ui){
 				alert("test1");
 				if ($(ui.nextPage).attr("id") == "resultsPage"){
 					alert("test2");
 					$("div[role='main']", ui.nextPage).empty();
 					showResults();
 					}
-				});	
+				});
 
 		//Empty page contents
 			$(document).on("pagebeforeshow", "#resultsPage", function(){
