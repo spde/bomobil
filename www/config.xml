@@ -58,7 +58,7 @@
 	<gap:plugin name="org.apache.cordova.vibration" />
 	<gap:plugin name="org.apache.cordova.dialogs" />
 	<gap:plugin name="nl.x-services.plugins.socialsharing" />
-	<gap:plugin name="it.mobimentum.phonegapspinnerplugin" />
+	<!--<gap:plugin name="it.mobimentum.phonegapspinnerplugin" />-->
 	<!--
 		<gap:plugin name="Example" />
 		A list of available plugins are available at https://build.phonegap.com/docs/plugins
