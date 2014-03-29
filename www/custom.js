@@ -952,14 +952,21 @@ function onDeviceReady(){
 
 	//Show results on #resultsPage
 		
+			$(document).on("pagecontainerbeforehide", "#searchPage", function(event, ui){
+				if ($(ui.nextPage).attr("id") == "resultsPage"){
+					$("div[role='main']", ui.nextPage).empty();
+					showResults();
+					}
+				});	
+
 		//Empty page contents
 			$(document).on("pagebeforeshow", "#resultsPage", function(){
-				$("div[role='main']", this).empty();
+				//$("div[role='main']", this).empty();
 				});
 
 		//Show results
 			$(document).on("pageshow", "#resultsPage", function(){
-				showResults();
+				//showResults();
 				});		
 
 	//Show page loader during page switch
