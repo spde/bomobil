@@ -28,15 +28,6 @@
 		//Check when deviceready event is fired
 			document.addEventListener("deviceready", onDeviceReady, false);
 
-		//Disable auto initialisation of JQM
-			$(document).on("mobileinit", function(){
-				alert('mobileinit');
-				$.mobile.autoInitialize = false;
-				$.mobile.autoInitializePage = false;
-				});
-
-		
-
 	</script>
 	<style>
 		label {
@@ -88,6 +79,13 @@
 </head>
 
 <body>
+
+<div data-role="page" id="splash">
+	<div role="main" class="ui-content">
+		<span lang-id="loading">LOADING</span>...
+		<div id="progressbar"><div class="progress-label"></div></div>
+	</div>
+</div>
 
 <div data-role="page" id="searchPage">
 	<div role="main" class="ui-content">
@@ -276,13 +274,6 @@
 		<label for=language_selector lang-id="language">Language</label>
 		<select id=language_selector>
 		</select>
-	</div>
-</div>
-
-<div data-role="page" id="splash">
-	<div role="main" class="ui-content">
-		<span lang-id="loading">LOADING</span>...
-		<div id="progressbar"><div class="progress-label"></div></div>
 	</div>
 </div>
 

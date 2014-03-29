@@ -805,9 +805,6 @@ function customAlert(message, vibrate){
 	}
 
 function onDeviceReady(){
-	alert('deviceready');
-
-	$.mobile.initializePage();
 	
 	//Flush database if not latest version
 		if (getLawnchair("database_ver") != database_ver){
@@ -948,20 +945,17 @@ function onDeviceReady(){
 				});		
 
 	//Show page loader during page switch
-		$(document).on("mobileinit", function(){
-			alert("mobileinit");
-			});
 		
 		$(document).on("pagebeforeshow", function(){
 			//$("body").addClass("ui-loading");
-			alert("pagebeforeshow");
+			//alert("pagebeforeshow");
 			spinnerplugin.show({overlay: true});
-			customAlert("show loadier", 1000);
+			customAlert("show loader", 1000);
 			});
 
 		$(document).on("pageshow", function(){
 			//$("body").removeClass("ui-loading");
 			spinnerplugin.hide();
-			customAlert("hide loadier", 1000);
+			customAlert("hide loader", 1000);
 			});
 	}
