@@ -174,7 +174,7 @@
 		//Show page loader during page switch
 			$(document).on("pagebeforeshow", function(){
 				//$("body").addClass("ui-loading");
-				spinnerplugin.show();
+				spinnerplugin.show({overlay: false});
 				});
 
 			$(document).on("pageshow", function(){
