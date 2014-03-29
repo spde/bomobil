@@ -28,7 +28,12 @@
 		//Check when deviceready event is fired
 			document.addEventListener("deviceready", onDeviceReady, false);
 
-		
+		//Disable auto initialisation of JQM
+			$(document).on("mobileinit", function(){
+				alert('mobileinit');
+				$.mobile.autoInitialize = false;
+				$.mobile.autoInitializePage = false;
+				});
 
 		
 

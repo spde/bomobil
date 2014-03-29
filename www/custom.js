@@ -798,6 +798,8 @@ function customAlert(message, vibrate){
 
 function onDeviceReady(){
 	alert('deviceready');
+
+	$.mobile.initializePage();
 	
 	//Flush database if not latest version
 		if (getLawnchair("database_ver") != database_ver){
