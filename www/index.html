@@ -173,11 +173,13 @@
 
 		//Show page loader during page switch
 			$(document).on("pagebeforeshow", function(){
-				$("body").addClass("ui-loading");
+				//$("body").addClass("ui-loading");
+				spinnerplugin.show();
 				});
 
 			$(document).on("pageshow", function(){
-				$("body").removeClass("ui-loading");
+				//$("body").removeClass("ui-loading");
+				spinnerplugin.hide();
 				});
 
 		
