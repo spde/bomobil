@@ -956,6 +956,7 @@ function onDeviceReady(){
 				alert("test1");
 				if ($(ui.nextPage).attr("id") == "resultsPage"){
 					alert("test2");
+					spinnerplugin.show({overlay: true});
 					$("div[role='main']", ui.nextPage).empty();
 					showResults();
 					}
