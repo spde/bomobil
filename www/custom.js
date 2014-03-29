@@ -863,19 +863,16 @@ function onDeviceReady(){
 				});
 
 	//Set initial splash page
-		$(document).on("pageshow", "#splash", function(event){
-			$( "#progressbar" ).progressbar({
-				value: 0,
-				change: function(){
-					$("#progressbar > .progress-label").text($("#progressbar").progressbar("value") + "%");
-					}
-				});
-			$("#progressbar").progressbar("value", 1);
-
-			fetchPages();
-			});
-
 		location.hash = "#splash";
+		$( "#progressbar" ).progressbar({
+			value: 0,
+			change: function(){
+				$("#progressbar > .progress-label").text($("#progressbar").progressbar("value") + "%");
+				}
+			});
+		$("#progressbar").progressbar("value", 1);
+
+		fetchPages();
 
 	//Hide navbar on input/textarea focus
 		$("input, textarea, select").on("focus", function(){
