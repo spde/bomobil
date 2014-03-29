@@ -829,6 +829,21 @@ function onDeviceReady(){
 			setLawnchair("database_ver", database_ver);
 			}
 
+	//Set language
+		setLanguage();
+		$("#language_selector").change(function(){
+			setLanguage($(this).val());
+			});
+
+		//Populate language selector
+			$(available_languages).each(function(){
+				var option = $("<option>")
+					.appendTo($("#language_selector"))
+					.val(this.code)
+					.text(this.lable)
+					.prop("selected", (getLawnchair("language") == this.code ? true : false))
+				});
+
 	//Navbar/footer
 		$(function() {
 			$( "[data-role='navbar']" ).navbar();
@@ -851,21 +866,6 @@ function onDeviceReady(){
 
 	//Check UUID
 		checkUUID();
-
-	//Set language
-		setLanguage();
-		$("#language_selector").change(function(){
-			setLanguage($(this).val());
-			});
-
-		//Populate language selector
-			$(available_languages).each(function(){
-				var option = $("<option>")
-					.appendTo($("#language_selector"))
-					.val(this.code)
-					.text(this.lable)
-					.prop("selected", (getLawnchair("language") == this.code ? true : false))
-				});
 
 	//Set initial splash page
 		location.hash = "#splash";
