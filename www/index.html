@@ -175,11 +175,13 @@
 			$(document).on("pagebeforeshow", function(){
 				//$("body").addClass("ui-loading");
 				spinnerplugin.show({overlay: false});
+				customAlert("show loadier", 1000);
 				});
 
 			$(document).on("pageshow", function(){
 				//$("body").removeClass("ui-loading");
 				spinnerplugin.hide();
+				customAlert("hide loadier", 1000);
 				});
 
 		

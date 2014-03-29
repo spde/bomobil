@@ -772,7 +772,7 @@ function setLanguage(lang){
 
 	//Load language into items
 		$.localise("lang", {language: getLawnchair("language"), path: "languages/"});
-		$("body").addClass("ui-loading");
+		//$("body").addClass("ui-loading");
 		$("[lang-id]").each(function(){
 			
 			//Exception for collapsible headings
@@ -785,7 +785,7 @@ function setLanguage(lang){
 					$(this).text(language[$(this).attr("lang-id")]);
 					}
 			});
-		$("body").removeClass("ui-loading");
+		//$("body").removeClass("ui-loading");
 	}
 
 function customAlert(message, vibrate){
