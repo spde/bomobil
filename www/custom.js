@@ -789,7 +789,8 @@ function setLanguage(lang){
 	}
 
 function customAlert(message, vibrate){
-	navigator.notification.alert(message, function(){}, null);
+	alert(message);
+	navigator.notification.alert(message, function(){}, "");
 	if (typeof(vibrate) !== "undefined" && vibrate == true){
 		navigator.notification.vibrate(1000);
 		}
