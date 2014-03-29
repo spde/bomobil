@@ -27,6 +27,12 @@
 
 		//Check when deviceready event is fired
 			document.addEventListener("deviceready", onDeviceReady, false);
+		
+		//Bypass deviceready if Firefox
+			if (typeof InstallTrigger !== 'undefined')
+			{
+			onDeviceReady();
+			}
 
 	</script>
 	<style>

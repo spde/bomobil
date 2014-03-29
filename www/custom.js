@@ -968,6 +968,7 @@ function onDeviceReady(){
 
 		//Show results
 			$(document).on("pageshow", "#resultsPage", function(){
+				alert("show results");
 				//showResults();
 				});		
 
