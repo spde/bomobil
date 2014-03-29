@@ -122,6 +122,9 @@ function fetchPages(){
 	
 	//Track initial AJAX req
 		ongoing_requests[0][0] = true;
+
+	//Show loader
+		spinnerplugin.show({overlay: true});
 	
 	//Initiate initial AJAX req (first page)
 		$.ajax({
@@ -446,6 +449,9 @@ function customSort(a, b, level){
 
 function showResults(){
 	
+	//Show spinner
+		spinnerplugin.show({overlay: true});
+
 	//Create collapsibleset div
 		collapsiblesetdiv = $("<div>");
 		collapsiblesetdiv.attr("data-role", "collapsibleset");
@@ -469,6 +475,9 @@ function showResults(){
 	//Activate collapsibleset widget
 		collapsiblesetdiv.collapsibleset().trigger('create');
 		collapsiblesetdiv.children(":first").trigger('expand');
+
+	//Hide spinner
+		spinnerplugin.hide();
 	}
 
 function addResultObject(object, collapsiblesetdiv){
@@ -642,6 +651,9 @@ function checkOngoingObjectRequests(){
 				return true;
 				}
 			}
+
+	//Remove spinner
+		spinnerplugin.hide();
 
 	//If there are no ongoing requests, complete status bar and change to search page
 		updateProgress(100);
@@ -851,7 +863,7 @@ function onDeviceReady(){
 				});
 
 	//Set initial splash page
-		$(document).on("pagecreate", "#splash", function(event){
+		$(document).on("pageshow", "#splash", function(event){
 			$( "#progressbar" ).progressbar({
 				value: 0,
 				change: function(){
@@ -948,7 +960,6 @@ function onDeviceReady(){
 		
 		$(document).on("pagebeforeshow", function(){
 			//$("body").addClass("ui-loading");
-			//alert("pagebeforeshow");
 			spinnerplugin.show({overlay: true});
 			customAlert("show loader", 1000);
 			});
