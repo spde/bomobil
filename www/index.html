@@ -21,8 +21,8 @@
 	<script>
 
 		//Alert any error messages (debugging)
-			window.onerror = function(error) {
-				alert(error);
+			window.onerror = function(error, url, line) {
+				alert("Line "+line+": "+error);
 				};
 
 		//Flush database if not latest version
@@ -77,6 +77,7 @@
 
 		//Set initial splash page
 			$(document).on("deviceready", function(){
+				alert("deviceready");
 				location.hash = "#splash";
 				});
 			
@@ -176,6 +177,7 @@
 		//Show page loader during page switch
 			$(document).on("pagebeforeshow", function(){
 				//$("body").addClass("ui-loading");
+				alert("pagebeforeshow");
 				spinnerplugin.show({overlay: true});
 				customAlert("show loadier", 1000);
 				});
