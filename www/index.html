@@ -56,7 +56,6 @@
 		//Check UUID
 			$(document).on("deviceready", function(event){
 				checkUUID();
-				alert("device ready");
 				});
 
 		//Set language
@@ -77,7 +76,9 @@
 				});
 
 		//Set initial splash page
-			location.hash = "#splash";
+			$(document).on("deviceready", function(){
+				location.hash = "#splash";
+				});
 			
 			$(document).on("pagecreate", "#splash", function(event){
 				$( "#progressbar" ).progressbar({
@@ -174,16 +175,15 @@
 
 		//Show page loader during page switch
 			$(document).on("pagebeforeshow", function(){
-				alert("pagebeforeshow");
 				//$("body").addClass("ui-loading");
-				//spinnerplugin.show({overlay: true});
-				//customAlert("show loadier", 1000);
+				spinnerplugin.show({overlay: true});
+				customAlert("show loadier", 1000);
 				});
 
 			$(document).on("pageshow", function(){
 				//$("body").removeClass("ui-loading");
-				//spinnerplugin.hide();
-				//customAlert("hide loadier", 1000);
+				spinnerplugin.hide();
+				customAlert("hide loadier", 1000);
 				});
 
 		
