@@ -448,9 +448,6 @@ function customSort(a, b, level){
 	}
 
 function showResults(){
-	
-	//Show spinner
-		spinnerplugin.show({overlay: true});
 
 	//Create collapsibleset div
 		collapsiblesetdiv = $("<div>");
@@ -955,9 +952,9 @@ function onDeviceReady(){
 			$(document).on("pagebeforehide", "#searchPage", function(event, ui){
 				if ($(ui.nextPage).attr("id") == "resultsPage"){
 					alert("test2");
-					spinnerplugin.show({overlay: true});
+					spinnerplugin.show({overlay: true}, function(){alert('callback alert')});
 					$("div[role='main']", ui.nextPage).empty();
-					setTimeout(function(){showResults()}, 20000);
+					setTimeout(function(){showResults()}, 2000);
 					}
 				});
 
