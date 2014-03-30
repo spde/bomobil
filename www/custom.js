@@ -470,10 +470,10 @@ function showResults(){
 		collapsiblesetdiv.collapsibleset().trigger('create');
 		collapsiblesetdiv.children(":first").trigger('expand');
 
-	location.hash = "#resultsPage";
-
 	//Hide spinner
 		spinnerplugin.hide();
+	
+	location.hash = "#resultsPage";
 	}
 
 function addResultObject(object, collapsiblesetdiv){
@@ -952,11 +952,11 @@ function onDeviceReady(){
 
 	//Show page loader during page switch
 		$(document).on("pagebeforeshow", function(){
-			spinnerShow(true);
+			//spinnerShow(true);
 			});
 
 		$(document).on("pageshow", function(){
-			spinnerplugin.hide();
+			//spinnerplugin.hide();
 			});
 	}
 
