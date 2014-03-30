@@ -255,7 +255,7 @@
 		</div>
 
 		<a class="ui-btn" href="#resultsPage" lang-id="search">Search</a>
-		<a class="ui-btn" href="#" onclick="spinnerplugin.show({overlay: false}, function(){alert('spinner started')}, function(){alert('spinner error')});">Spinner</a>
+		<a class="ui-btn" href="#" onclick="spinnerplugin.show({overlay: false}, function(){spinnerplugin.hide()}, function(){alert('spinner error')});">Spinner</a>
 		<a class="ui-btn" href="#" onclick="spinnerplugin.show({overlay: false}, spinner_started, spinner_error;">Spinner2</a>
 	</div>
 </div>
