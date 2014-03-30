@@ -961,7 +961,7 @@ function onDeviceReady(){
 	}
 
 function spinnerShow(overlay, callback){
-	spinnerplugin.show({overlay: overlay});
+	//spinnerplugin.show({overlay: overlay});
 	if(typeof callback == "function"){
 		setTimeout(function(){callback()}, 50);
 		}
