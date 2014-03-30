@@ -952,9 +952,9 @@ function onDeviceReady(){
 			$(document).on("pagebeforehide", "#searchPage", function(event, ui){
 				if ($(ui.nextPage).attr("id") == "resultsPage"){
 					//alert("test2");
-					spinnerplugin.show({overlay: true}, function(){alert('callback alert')});
+					//spinnerplugin.show({overlay: true}, function(){alert('callback alert')});
 					$("div[role='main']", ui.nextPage).empty();
-					setTimeout(function(){showResults()}, 2000);
+					spinnerShow(true, function(){showResults()});
 					}
 				});
 
@@ -980,7 +980,7 @@ function onDeviceReady(){
 			});
 	}
 
-function spinner(overlay, callback){
+function spinnerShow(overlay, callback){
 	spinnerplugin.show({overlay: overlay});
 	if(typeof callback == "function"){
 		setTimeout(function(){callback()}, 50);
