@@ -951,7 +951,7 @@ function onDeviceReady(){
 		
 			$(document).on("pagebeforehide", "#searchPage", function(event, ui){
 				if ($(ui.nextPage).attr("id") == "resultsPage"){
-					alert("test2");
+					//alert("test2");
 					spinnerplugin.show({overlay: true}, function(){alert('callback alert')});
 					$("div[role='main']", ui.nextPage).empty();
 					setTimeout(function(){showResults()}, 2000);
