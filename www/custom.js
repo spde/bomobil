@@ -122,9 +122,6 @@ function fetchPages(){
 	
 	//Track initial AJAX req
 		ongoing_requests[0][0] = true;
-
-	//Show loader
-		spinnerplugin.show({overlay: false});
 	
 	//Initiate initial AJAX req (first page)
 		$.ajax({
@@ -571,18 +568,19 @@ function addResultObject(object, collapsiblesetdiv){
 				.appendTo(buttons_div)
 				.addClass("ui-btn ui-shadow ui-corner-all ui-icon-location ui-btn-icon-notext")
 				.click({address: object['address'], area: (object['area'] == "Kommuner nära Göteborg" ? object['area2'] : "Göteborg")}, function(event){
-					spinnerplugin.show({overlay: true});
-					$("#mapIframe").get(0).contentWindow.setAddressMarker(event.data.address+", "+event.data.area);
-					$("#mapPopup").popup("open", {
-						"positionTo": "window",
-						"transition": "fade",
-						"tolerance": "15,15,15,15",
+					spinnerShow(true, function(){
+						$("#mapIframe").get(0).contentWindow.setAddressMarker(event.data.address+", "+event.data.area);
+						$("#mapPopup").popup("open", {
+							"positionTo": "window",
+							"transition": "fade",
+							"tolerance": "15,15,15,15",
+							})
+							.popup({
+								afterclose: function() {
+									$("#mapIframe").get(0).contentWindow.removeAddressMarker();
+									},
+								});
 						})
-						.popup({
-							afterclose: function() {
-								$("#mapIframe").get(0).contentWindow.removeAddressMarker();
-								},
-							});
 					});
 
 		//Images button
@@ -591,29 +589,30 @@ function addResultObject(object, collapsiblesetdiv){
 					.appendTo(buttons_div)
 					.addClass("ui-btn ui-shadow ui-corner-all ui-icon-camera ui-btn-icon-notext")
 					.click({imgs: object['images']}, function(event){
-						spinnerplugin.show({overlay: true});
-						img = $("<img>")
-							.attr("id", "image_object")
-							.addClass("photo")
-							.load(function(){
-								$("#imagePopup").popup("open", {
-									"positionTo": "window",
-									"transition": "fade",
+						spinnerShow(true, function(){
+							img = $("<img>")
+								.attr("id", "image_object")
+								.addClass("photo")
+								.load(function(){
+									$("#imagePopup").popup("open", {
+										"positionTo": "window",
+										"transition": "fade",
+										})
+										.popup({
+											afterclose: function() {
+												$("#image_object").remove();
+												},
+											});
 									})
-									.popup({
-										afterclose: function() {
-											$("#image_object").remove();
-											},
-										});
-								})
-							.error(function(){
-								$("#image_object").remove();
-								customAlert(language["image_error_msg"]+" ("+this.src+")");
-								spinnerplugin.hide();
-								console.log('image error:' + this.src);
-								})
-							.attr("src", event.data.imgs[0]);
-						$("#imagePopup").append(img);
+								.error(function(){
+									$("#image_object").remove();
+									customAlert(language["image_error_msg"]+" ("+this.src+")");
+									spinnerplugin.hide();
+									console.log('image error:' + this.src);
+									})
+								.attr("src", event.data.imgs[0]);
+							$("#imagePopup").append(img);
+							})
 						});
 				}
 
@@ -632,8 +631,9 @@ function addResultObject(object, collapsiblesetdiv){
 				.appendTo(buttons_div)
 				.addClass("ui-btn ui-shadow ui-corner-all ui-icon-facebook ui-btn-icon-notext")
 				.click({id: object["id"], address: object["address"]}, function(event){
-					spinnerplugin.show({overlay: true});
-					window.plugins.socialsharing.shareViaFacebook(event.data.address, null, "http://www.boplats.se/HSS/Object/object_details.aspx?objectguid="+event.data.id, function() {console.log('share ok'); spinnerplugin.hide();}, function(errormsg){customAlert(errormsg); spinnerplugin.hide();});
+					spinnerShow(true, function(){
+						window.plugins.socialsharing.shareViaFacebook(event.data.address, null, "http://www.boplats.se/HSS/Object/object_details.aspx?objectguid="+event.data.id, function() {console.log('share ok'); spinnerplugin.hide();}, function(errormsg){customAlert(errormsg); spinnerplugin.hide();});
+						});
 					});
 
 		//Twitter button
@@ -641,8 +641,9 @@ function addResultObject(object, collapsiblesetdiv){
 				.appendTo(buttons_div)
 				.addClass("ui-btn ui-shadow ui-corner-all ui-icon-twitter ui-btn-icon-notext")
 				.click({id: object["id"], address: object["address"]}, function(event){
-					spinnerplugin.show({overlay: true});
-					window.plugins.socialsharing.shareViaTwitter(event.data.address, null, "http://www.boplats.se/HSS/Object/object_details.aspx?objectguid="+event.data.id, function() {console.log('share ok'); spinnerplugin.hide();}, function(errormsg){customAlert(errormsg); spinnerplugin.hide();});
+					spinnerShow(true, function(){
+						window.plugins.socialsharing.shareViaTwitter(event.data.address, null, "http://www.boplats.se/HSS/Object/object_details.aspx?objectguid="+event.data.id, function() {console.log('share ok'); spinnerplugin.hide();}, function(errormsg){customAlert(errormsg); spinnerplugin.hide();});
+						})
 					});
 
 	}
@@ -876,7 +877,7 @@ function onDeviceReady(){
 			});
 		$("#progressbar").progressbar("value", 1);
 
-		fetchPages();
+		spinnerShow(false, function(){fetchPages()});
 
 	//Hide navbar on input/textarea focus
 		$("input, textarea, select").on("focus", function(){
@@ -949,30 +950,9 @@ function onDeviceReady(){
 			
 			});
 
-	//Show results on #resultsPage
-		
-			/*$(document).on("pagebeforehide", "#searchPage", function(event, ui){
-				if ($(ui.nextPage).attr("id") == "resultsPage"){
-					$("div[role='main']", ui.nextPage).empty();
-					spinnerShow(true, function(){showResults()});
-					}
-				});*/
-
-		//Empty page contents
-			$(document).on("pagebeforeshow", "#resultsPage", function(){
-				//$("div[role='main']", this).empty();
-				});
-
-		//Show results
-			$(document).on("pageshow", "#resultsPage", function(){
-				alert("show results");
-				//showResults();
-				});		
-
 	//Show page loader during page switch
-		
 		$(document).on("pagebeforeshow", function(){
-			spinnerplugin.show({overlay: true});
+			spinnerShow(true);
 			});
 
 		$(document).on("pageshow", function(){
