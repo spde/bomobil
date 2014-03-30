@@ -976,6 +976,6 @@ function onDeviceReady(){
 			});
 
 		$(document).on("pageshow", function(){
-			//spinnerplugin.hide();
+			spinnerplugin.hide();
 			});
 	}
