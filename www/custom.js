@@ -953,12 +953,11 @@ function onDeviceReady(){
 	//Show results on #resultsPage
 		
 			$(document).on("pagebeforehide", "#searchPage", function(event, ui){
-				alert("test1");
 				if ($(ui.nextPage).attr("id") == "resultsPage"){
 					alert("test2");
 					spinnerplugin.show({overlay: true});
 					$("div[role='main']", ui.nextPage).empty();
-					setTimeout(function(){showResults()}, 20);
+					setTimeout(function(){showResults()}, 20000);
 					}
 				});
 
@@ -980,6 +979,6 @@ function onDeviceReady(){
 			});
 
 		$(document).on("pageshow", function(){
-			spinnerplugin.hide();
+			//spinnerplugin.hide();
 			});
 	}
