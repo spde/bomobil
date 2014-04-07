@@ -112,6 +112,9 @@ function checkPageFetchCompletion(){
 		value = (count / ongoing_requests[0].length) * 15 + 5;
 		updateProgress(value);
 
+	//Update loading texts
+		$("#page_count").text(count+" / "+ongoing_requests[0].length);
+
 	//If all pages have been fetched, proceed to process objects
 		if (count == ongoing_requests[0].length){
 			processPages();
@@ -632,8 +635,9 @@ function addResultObject(object, collapsiblesetdiv){
 				.addClass("ui-btn ui-shadow ui-corner-all ui-icon-facebook ui-btn-icon-notext")
 				.click({id: object["id"], address: object["address"]}, function(event){
 					spinnerShow(true, function(){
-						alert('callback called');
+						
 						window.plugins.socialsharing.shareViaFacebook(event.data.address, null, "http://www.boplats.se/HSS/Object/object_details.aspx?objectguid="+event.data.id, function() {console.log('share ok'); spinnerplugin.hide();}, function(errormsg){customAlert(errormsg); spinnerplugin.hide();});
+						alert('callback called');
 						});
 					});
 
