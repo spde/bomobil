@@ -830,6 +830,11 @@ function customAlert(message, vibrate){
 
 function onDeviceReady(){
 	
+	//Add slight header margin for iOS 7
+		if (device.platform == 'iOS' && device.version >= '7.0') {
+			document.body.style.marginTop = "20px";
+			}
+
 	//Flush database if not latest version
 		if (getLawnchair("database_ver") != database_ver){
 			clearLawnchair();
