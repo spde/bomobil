@@ -99,6 +99,12 @@
 	</div>
 </div>
 
+<div data-role="page" id="debug">
+	<div role="main" class="ui-content">
+		DEBUG PAGE
+	</div>
+</div>
+
 <div data-role="page" id="searchPage">
 	<div role="main" class="ui-content">
 		<div data-role="collapsibleset" data-theme="a" data-content-theme="a" data-inset="false">
@@ -263,8 +269,7 @@
 		<a class="ui-btn" href="#resultsPage" onclick="spinnerShow(true, function(){showResults()})" lang-id="search">Search</a>
 	</div>
 </div>
-<script>function spinner_started(){alert('spinner started')}
-function spinner_error(){alert('spinner error')}</script>
+
 <div data-role="page" id="resultsPage">
 	<div role="main" class="ui-content" data-tolerance=>
 	</div>
@@ -295,6 +300,7 @@ function spinner_error(){alert('spinner error')}</script>
 		<ul>
 			<li><a href="#searchPage" class="ui-state-persist" data-icon="search" data-transition="fade"></a></li>
 			<li><a href="#userPage" class="ui-state-persist" data-icon="user" data-transition="fade"></a></li>
+			<li><a href="#debug" class="ui-state-persist" data-icon="alert" data-transition="fade"></a></li>
 		</ul>
 	</div>
 </div>
