@@ -309,7 +309,7 @@ function processObjectDeep(id){
 			objects[id]['description'] = $(returnData).find("span[id=lblDescription]").text().trim();
 			objects[id]['floor_plan'] = $(returnData).find("span[id=lblPlanning]").text().trim();
 			objects[id]['properties'] = $(returnData).find("table[id=dlProperties] b").map(function(){return $(this).text().trim()}).get().join(", ");
-			objects[id]['images'] = $(returnData).find("table[id=dlMultimedia] img").map(function(){pattern = /ico_pdf\.gif$/; if (pattern.test($(this).attr("src")) == false && validateContentType("http://www.boplats.se"+$(this).attr("src").trim(), "image") == true){return "http://www.boplats.se"+$(this).attr("src").trim()}}).get();
+			objects[id]['images'] = $(returnData).find("table[id=dlMultimedia] img").map(function(){pattern = /ico_pdf\.gif$/; alert(validateContentType("http://www.boplats.se"+$(this).attr("src").trim(), "image")); if (pattern.test($(this).attr("src")) == false && validateContentType("http://www.boplats.se"+$(this).attr("src").trim(), "image") == true){return "http://www.boplats.se"+$(this).attr("src").trim()}}).get();
 			objects[id]['pdfs'] = $(returnData).find("table[id=dlMultimedia] a").map(function(){return $(this).attr("href").trim().replace(/\.{2}\/\.{2}/, "http://www.boplats.se")}).get();
 			objects[id]['icons'] = $(returnData).find("tr[id=trIcons] a.apartment_detail_legend").map(function(){return {id: $(this).attr("id"), src: $("img", this).attr("src").trim().replace(/\.{2}\/\.{2}/, "http://www.boplats.se")};}).get();
 		
