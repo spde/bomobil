@@ -661,6 +661,10 @@ function checkOngoingObjectRequests(){
 		spinnerplugin.hide();
 
 	//If there are no ongoing requests, complete status bar and change to search page
+
+		//Enable navbar
+			$("[data-role='navbar'] a").removeClass("ui-state-disabled");
+
 		updateProgress(100);
 		location.hash = "#searchPage";
 	}
@@ -866,6 +870,9 @@ function onDeviceReady(){
 						}
 					});
 			});
+
+	//Disable navbar buttons
+		$("[data-role='navbar'] a").addClass("ui-state-disabled");
 
 	//Check UUID
 		checkUUID();
