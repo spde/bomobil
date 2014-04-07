@@ -663,7 +663,7 @@ function checkOngoingObjectRequests(){
 	//If there are no ongoing requests, complete status bar and change to search page
 
 		//Enable navbar
-			$("[data-role='navbar'] a").removeClass("ui-state-disabled");
+			$("[data-role='navbar']").navbar("option", "disabled", false);
 
 		updateProgress(100);
 		location.hash = "#searchPage";
@@ -853,7 +853,7 @@ function onDeviceReady(){
 
 	//Navbar/footer
 		$(function() {
-			$( "[data-role='navbar']" ).navbar();
+			$( "[data-role='navbar']" ).navbar({disabled: true});
 			$( "[data-role='header'], [data-role='footer']" ).toolbar();
 		});
 
@@ -870,9 +870,6 @@ function onDeviceReady(){
 						}
 					});
 			});
-
-	//Disable navbar buttons
-		$("[data-role='navbar'] a").addClass("ui-state-disabled");
 
 	//Check UUID
 		checkUUID();
