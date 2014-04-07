@@ -334,6 +334,7 @@ function validateContentType(url, type){
 		url: url,
 		success: function(data, textStatus, jqXHR){
 			results = pattern.test(jqXHR.getResponseHeader('Content-Type'));
+			alert(type+" - "+jqXHR.getResponseHeader('Content-Type')+" - "+results);
 			},
 		error: function(jqXHR, textStatus, errorThrown){
 			results = false;
