@@ -106,7 +106,8 @@
 	<div role="main" class="ui-content">
 		DEBUG PAGE
 		<a class="ui-btn" onclick="clearLawnchair();">Flush DB</a>
-		<button onclick="spinnerShow(true, function(){window.plugins.socialsharing.shareViaFacebook('Message via Facebook', null, null, function() {console.log('share ok')}, function(errormsg){alert(errormsg)})}">msg via Facebook (with errcallback)</button>
+		<button onclick="spinnerShow(true, function(){
+			window.plugins.socialsharing.shareViaFacebook('Message via Facebook', null, null, function() {console.log('share ok')}, function(errormsg){alert(errormsg)})})">msg via Facebook (with errcallback)</button>
 	</div>
 </div>
 
