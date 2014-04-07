@@ -682,7 +682,7 @@ function updateProgress(value){
 			value = (count / Object.keys(ongoing_requests[1]).length) * 80 + 20;
 
 			//Update texts on splash page
-				$("downloading").text(count + " / " + Object.keys(ongoing_requests[1]).length);
+				$("#download_count").text(count + " / " + Object.keys(ongoing_requests[1]).length);
 			}
 
 	//Update progress bar
