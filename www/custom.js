@@ -302,7 +302,7 @@ function processObjectDeep(id){
 			objects[id]['last_reg_date'] = $(returnData).find("span[id=lblLastRegDate]").text().trim();
 			objects[id]['boplats_id'] = $(returnData).find("span[id=lblObjectId]").text().trim();
 			objects[id]['area'] = $(returnData).find("span[id=lblArea]").text().trim();
-			objects[id]['area2'] = $(returnData).find("a[id=lblArea2]").text().trim();
+			objects[id]['area2'] = $(returnData).find("a[id=hlArea2]").text().trim();
 			objects[id]['description'] = $(returnData).find("span[id=lblDescription]").text().trim();
 			objects[id]['floor_plan'] = $(returnData).find("span[id=lblPlanning]").text().trim();
 			objects[id]['properties'] = $(returnData).find("table[id=dlProperties] b").map(function(){return $(this).text().trim()}).get().join(", ");
