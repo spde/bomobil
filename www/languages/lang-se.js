@@ -40,4 +40,7 @@ language = {
 	image_error_msg: "Kunde inte ladda bild, fel på bilden",
 	login_error_msg1: "Fyll i användaruppgifter",
 	language: "Språk",
+	updating: "Updaterar",
+	downloading: "Laddar ner",
+	objects: "objekt",
 	}

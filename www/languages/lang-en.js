@@ -40,4 +40,7 @@ language = {
 	image_error_msg: "Couldn't load image, error with image",
 	login_error_msg1: "Enter login details",
 	language: "Language",
+	updating: "Updating",
+	downloading: "Downloading",
+	objects: "objects",
 	}
